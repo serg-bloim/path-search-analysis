@@ -3,15 +3,15 @@ namespace Algo
 {
     public class SearchContext
     {
-        private Map map;
-        private Point startCell;
-        private Point destCell;
+        public Map<Cell> map;
+        public Point startCell;
+        public Point dstCell;
 
-        public SearchContext(Map map, Point startCell, Point destCell)
+        public SearchContext(Map<Cell> map, Point startCell, Point destCell)
         {
             this.map = map;
             this.startCell = startCell;
-            this.destCell = destCell;
+            this.dstCell = destCell;
         }
     }
 }

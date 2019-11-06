@@ -14,5 +14,21 @@ namespace Algo
             return !(a == b);
         }
 
+        public Point left()
+        {
+            return new Point { x = x - 1, y = y };
+        }
+        public Point right()
+        {
+            return new Point { x = x + 1, y = y };
+        }
+        public Point up()
+        {
+            return new Point { x = x, y = y-1 };
+        }
+        public Point down()
+        {
+            return new Point { x = x, y = y+1 };
+        }
     }
 }

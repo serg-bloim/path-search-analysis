@@ -31,16 +31,21 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.startBtn = new System.Windows.Forms.Button();
             this.runSingleIter = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.startBtn = new System.Windows.Forms.Button();
+            this.runNItersBtn = new System.Windows.Forms.Button();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.statusLbl = new System.Windows.Forms.Label();
+            this.runTillEndBtn = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -56,20 +61,34 @@
             // panel4
             // 
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(0, 100);
+            this.panel4.Location = new System.Drawing.Point(0, 185);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(200, 326);
+            this.panel4.Size = new System.Drawing.Size(200, 241);
             this.panel4.TabIndex = 1;
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.runTillEndBtn);
+            this.panel3.Controls.Add(this.statusLbl);
+            this.panel3.Controls.Add(this.numericUpDown1);
+            this.panel3.Controls.Add(this.runNItersBtn);
             this.panel3.Controls.Add(this.startBtn);
             this.panel3.Controls.Add(this.runSingleIter);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(200, 100);
+            this.panel3.Size = new System.Drawing.Size(200, 185);
             this.panel3.TabIndex = 0;
+            // 
+            // startBtn
+            // 
+            this.startBtn.Location = new System.Drawing.Point(12, 3);
+            this.startBtn.Name = "startBtn";
+            this.startBtn.Size = new System.Drawing.Size(75, 23);
+            this.startBtn.TabIndex = 1;
+            this.startBtn.Text = "Start";
+            this.startBtn.UseVisualStyleBackColor = true;
+            this.startBtn.Click += new System.EventHandler(this.startBtn_Click);
             // 
             // runSingleIter
             // 
@@ -120,15 +139,38 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // startBtn
+            // runNItersBtn
             // 
-            this.startBtn.Location = new System.Drawing.Point(12, 3);
-            this.startBtn.Name = "startBtn";
-            this.startBtn.Size = new System.Drawing.Size(75, 23);
-            this.startBtn.TabIndex = 1;
-            this.startBtn.Text = "Start";
-            this.startBtn.UseVisualStyleBackColor = true;
-            this.startBtn.Click += new System.EventHandler(this.startBtn_Click);
+            this.runNItersBtn.Location = new System.Drawing.Point(12, 61);
+            this.runNItersBtn.Name = "runNItersBtn";
+            this.runNItersBtn.Size = new System.Drawing.Size(75, 23);
+            this.runNItersBtn.TabIndex = 2;
+            this.runNItersBtn.Text = "Run #";
+            this.runNItersBtn.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(93, 64);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(74, 20);
+            this.numericUpDown1.TabIndex = 3;
+            // 
+            // status
+            // 
+            this.statusLbl.AutoSize = true;
+            this.statusLbl.Location = new System.Drawing.Point(12, 169);
+            this.statusLbl.Name = "status";
+            this.statusLbl.Size = new System.Drawing.Size(0, 13);
+            this.statusLbl.TabIndex = 4;
+            // 
+            // runTillEndBtn
+            // 
+            this.runTillEndBtn.Location = new System.Drawing.Point(12, 90);
+            this.runTillEndBtn.Name = "runTillEndBtn";
+            this.runTillEndBtn.Size = new System.Drawing.Size(75, 23);
+            this.runTillEndBtn.TabIndex = 5;
+            this.runTillEndBtn.Text = "Run Till End";
+            this.runTillEndBtn.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -143,8 +185,10 @@
             this.Text = "Form1";
             this.panel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -162,6 +206,10 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button runSingleIter;
         private System.Windows.Forms.Button startBtn;
+        private System.Windows.Forms.Button runTillEndBtn;
+        private System.Windows.Forms.Label statusLbl;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Button runNItersBtn;
     }
 }
 

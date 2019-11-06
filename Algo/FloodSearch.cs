@@ -11,46 +11,76 @@ namespace Algo
         FINISHED,
         FOUND
     }
-    public enum Direction2D
+    [Flags]
+    public enum CellFlags
     {
-        TOP,
-        BOTTOM, 
+        TOP, 
         LEFT,
-        RIGHT,
+        VISITED,
+        FRONTIER,
     }
 
     public class FloodSearch
     {
-        private int[,] pathMap;
-        private Map map;
+        private Map<int> distMap;
+        public Map<CellFlags> pathFlagsMap;
+        private Map<Cell> map;
         LinkedList<Point> frontier = new LinkedList<Point>();
         private SearchContext ctx;
-
-        public FloodSearch(Map map)
-        {
-            this.map = map;
-            pathMap = new int[map.width, map.height];
-            frontier.AddLast(map.startCell);
-            pathMap[map.startCell] = 0;
-        }
+        public IterStatus status { get; private set; } = IterStatus.NONE;
 
         public FloodSearch(SearchContext ctx)
         {
             this.ctx = ctx;
+            map = ctx.map;
+            frontier.AddFirst(ctx.startCell);
+            pathFlagsMap = new Map<CellFlags>(map.width, map.height);
+            distMap = new Map<int>(map.width, map.height);
+            for (int x = 0; x < distMap.width; x++)
+            {
+                for (int y = 0; y < distMap.height; y++)
+                {
+                    distMap[x, y] = int.MaxValue;
+                }
+            }
+            distMap[ctx.startCell] = 0;
         }
 
         public IterStatus iter()
         {
-            if (frontier.Count == 0)
+            if(this.status.HasFlag(IterStatus.FINISHED))
             {
-                return IterStatus.FINISHED;
+                return this.status;
             }
             Point p = PollFirst();
-            if(p == map.destCell)
+            pathFlagsMap[p] &= ~CellFlags.FRONTIER;
+            status |= processCandidate(p, p.left());
+            status |= processCandidate(p, p.right());
+            status |= processCandidate(p, p.up());
+            status |= processCandidate(p, p.down());
+            if (frontier.Count == 0)
             {
-                return IterStatus.FINISHED | IterStatus.FOUND;
+                status |= IterStatus.FINISHED;
             }
+            return status;
+        }
 
+        private IterStatus processCandidate(Point from, Point to)
+        {
+            if (map[to].isWalkable)
+            {
+            CellFlags flags = pathFlagsMap[to];
+                if (!flags.HasFlag(CellFlags.VISITED))
+                {
+                    pathFlagsMap[to] = flags | CellFlags.VISITED | CellFlags.FRONTIER;
+                    frontier.AddLast(to);
+                    distMap[to] = distMap[from] + 1;
+                    if(to == ctx.dstCell)
+                    {
+                        return IterStatus.FINISHED | IterStatus.FOUND;
+                    }
+                }
+            }
             return IterStatus.NONE;
         }
 

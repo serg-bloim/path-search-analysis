@@ -11,6 +11,7 @@ namespace Algo
 
         public bool isStart { get { return val == START; } }
         public bool isDest { get { return val == DESTINATION; } }
+        public bool isWalkable { get { return val == FREE.val; } }
 
         public static Cell fromInt(int v)
         {
