@@ -4,7 +4,15 @@ namespace Algo
 {
     public class Utils
     {
-
+        public static int diff(int a, int b)
+        {
+            int res = a - b;
+            if (res < 0)
+            {
+                res = -res;
+            }
+            return res;
+        }
     }
     [Flags]
     public enum IterStatus

@@ -25,6 +25,7 @@ namespace AlgoUI
         {
             InitializeComponent();
             canvas = pictureBox1;
+            algoDDBox.SelectedItem = algoDDBox.Items[0];
             loadMap("simple.png");
             startBtn_Click(null, null);
         }
@@ -154,7 +155,7 @@ namespace AlgoUI
         {
             if (alg != null)
             {
-                statusLbl.Text = alg.status.ToString();
+                statusLbl.Text = iterN + " : " + alg.status.ToString();
             }
         }
 
@@ -185,12 +186,32 @@ namespace AlgoUI
                         map[x, y] = v;
                     }
                 }
-                SearchContext ctx = new SearchContext(map, startCell, destCell);
-                alg = new AStarSearch(ctx);
+                craeteAlgo(map, startCell, destCell);
                 iterN = 0;
                 updateView();
             }
         }
+
+        private void craeteAlgo(Map<Cell> map, Point startCell, Point destCell)
+        {
+            SearchContext ctx;
+            switch (algoDDBox.SelectedItem.ToString())
+            {
+                case "Flood":
+                    ctx = new SearchContext(map, startCell, destCell);
+                    alg = new FloodSearch(ctx);
+                    break;
+                case "A*":
+                    ctx = new SearchContext(map, startCell, destCell);
+                    alg = new AStarSearch(ctx);
+                    break;
+                case "A* - mod1":
+                    ctx = new SearchContextMod1(map, startCell, destCell);
+                    alg = new AStarSearch(ctx);
+                    break;
+            }
+        }
+
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {

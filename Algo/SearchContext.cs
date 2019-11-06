@@ -21,19 +21,11 @@ namespace Algo
             return map[to].isWalkable;
         }
 
-        internal int heuristic(Point to)
+        internal virtual int heuristic(Point to)
         {
-            return diff(to.x, dstCell.x) + diff(to.y, dstCell.y);
+            return Utils.diff(to.x, dstCell.x) + Utils.diff(to.y, dstCell.y);
         }
 
-        private int diff(int a, int b)
-        {
-            int res = a - b;
-            if (res < 0)
-            {
-                res = -res;
-            }
-            return res;
-        }
+
     }
 }

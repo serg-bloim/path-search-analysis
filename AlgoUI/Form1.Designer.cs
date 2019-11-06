@@ -32,6 +32,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.redrawFreq = new System.Windows.Forms.TrackBar();
+            this.button1 = new System.Windows.Forms.Button();
+            this.delaySlider = new System.Windows.Forms.TrackBar();
             this.runTillEndBtn = new System.Windows.Forms.Button();
             this.statusLbl = new System.Windows.Forms.Label();
             this.maxIters = new System.Windows.Forms.NumericUpDown();
@@ -44,18 +47,16 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.delaySlider = new System.Windows.Forms.TrackBar();
             this.iterTimer = new System.Windows.Forms.Timer(this.components);
-            this.button1 = new System.Windows.Forms.Button();
-            this.redrawFreq = new System.Windows.Forms.TrackBar();
+            this.algoDDBox = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.redrawFreq)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.delaySlider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxIters)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.delaySlider)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.redrawFreq)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -71,13 +72,14 @@
             // panel4
             // 
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(0, 244);
+            this.panel4.Location = new System.Drawing.Point(0, 318);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(200, 182);
+            this.panel4.Size = new System.Drawing.Size(200, 108);
             this.panel4.TabIndex = 1;
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.algoDDBox);
             this.panel3.Controls.Add(this.redrawFreq);
             this.panel3.Controls.Add(this.button1);
             this.panel3.Controls.Add(this.delaySlider);
@@ -90,12 +92,43 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(200, 244);
+            this.panel3.Size = new System.Drawing.Size(200, 318);
             this.panel3.TabIndex = 0;
+            // 
+            // redrawFreq
+            // 
+            this.redrawFreq.Location = new System.Drawing.Point(12, 196);
+            this.redrawFreq.Maximum = 1000;
+            this.redrawFreq.Minimum = 1;
+            this.redrawFreq.Name = "redrawFreq";
+            this.redrawFreq.Size = new System.Drawing.Size(182, 45);
+            this.redrawFreq.TabIndex = 8;
+            this.redrawFreq.Value = 10;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(93, 117);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "stopBtn";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // delaySlider
+            // 
+            this.delaySlider.Location = new System.Drawing.Point(12, 146);
+            this.delaySlider.Maximum = 2000;
+            this.delaySlider.Name = "delaySlider";
+            this.delaySlider.Size = new System.Drawing.Size(182, 45);
+            this.delaySlider.SmallChange = 10;
+            this.delaySlider.TabIndex = 6;
+            this.delaySlider.Value = 1;
+            this.delaySlider.ValueChanged += new System.EventHandler(this.delaySlider_ValueChanged);
             // 
             // runTillEndBtn
             // 
-            this.runTillEndBtn.Location = new System.Drawing.Point(12, 90);
+            this.runTillEndBtn.Location = new System.Drawing.Point(12, 117);
             this.runTillEndBtn.Name = "runTillEndBtn";
             this.runTillEndBtn.Size = new System.Drawing.Size(75, 23);
             this.runTillEndBtn.TabIndex = 5;
@@ -105,14 +138,15 @@
             // statusLbl
             // 
             this.statusLbl.AutoSize = true;
-            this.statusLbl.Location = new System.Drawing.Point(12, 169);
+            this.statusLbl.Location = new System.Drawing.Point(12, 244);
             this.statusLbl.Name = "statusLbl";
-            this.statusLbl.Size = new System.Drawing.Size(0, 13);
+            this.statusLbl.Size = new System.Drawing.Size(37, 13);
             this.statusLbl.TabIndex = 4;
+            this.statusLbl.Text = "Status";
             // 
             // maxIters
             // 
-            this.maxIters.Location = new System.Drawing.Point(93, 64);
+            this.maxIters.Location = new System.Drawing.Point(93, 91);
             this.maxIters.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -129,7 +163,7 @@
             // 
             // runNItersBtn
             // 
-            this.runNItersBtn.Location = new System.Drawing.Point(12, 61);
+            this.runNItersBtn.Location = new System.Drawing.Point(12, 88);
             this.runNItersBtn.Name = "runNItersBtn";
             this.runNItersBtn.Size = new System.Drawing.Size(75, 23);
             this.runNItersBtn.TabIndex = 2;
@@ -139,7 +173,7 @@
             // 
             // startBtn
             // 
-            this.startBtn.Location = new System.Drawing.Point(12, 3);
+            this.startBtn.Location = new System.Drawing.Point(12, 30);
             this.startBtn.Name = "startBtn";
             this.startBtn.Size = new System.Drawing.Size(75, 23);
             this.startBtn.TabIndex = 1;
@@ -149,7 +183,7 @@
             // 
             // runSingleIter
             // 
-            this.runSingleIter.Location = new System.Drawing.Point(12, 32);
+            this.runSingleIter.Location = new System.Drawing.Point(12, 59);
             this.runSingleIter.Name = "runSingleIter";
             this.runSingleIter.Size = new System.Drawing.Size(75, 23);
             this.runSingleIter.TabIndex = 0;
@@ -207,40 +241,21 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // delaySlider
-            // 
-            this.delaySlider.Location = new System.Drawing.Point(12, 119);
-            this.delaySlider.Maximum = 2000;
-            this.delaySlider.Name = "delaySlider";
-            this.delaySlider.Size = new System.Drawing.Size(182, 45);
-            this.delaySlider.SmallChange = 10;
-            this.delaySlider.TabIndex = 6;
-            this.delaySlider.Value = 1;
-            this.delaySlider.ValueChanged += new System.EventHandler(this.delaySlider_ValueChanged);
-            // 
             // iterTimer
             // 
             this.iterTimer.Tick += new System.EventHandler(this.iterTimer_Tick);
             // 
-            // button1
+            // algoDDBox
             // 
-            this.button1.Location = new System.Drawing.Point(93, 90);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "stopBtn";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // redrawFreq
-            // 
-            this.redrawFreq.Location = new System.Drawing.Point(12, 169);
-            this.redrawFreq.Maximum = 1000;
-            this.redrawFreq.Minimum = 1;
-            this.redrawFreq.Name = "redrawFreq";
-            this.redrawFreq.Size = new System.Drawing.Size(182, 45);
-            this.redrawFreq.TabIndex = 8;
-            this.redrawFreq.Value = 10;
+            this.algoDDBox.FormattingEnabled = true;
+            this.algoDDBox.Items.AddRange(new object[] {
+            "Flood",
+            "A*",
+            "A* - mod1"});
+            this.algoDDBox.Location = new System.Drawing.Point(12, 3);
+            this.algoDDBox.Name = "algoDDBox";
+            this.algoDDBox.Size = new System.Drawing.Size(121, 21);
+            this.algoDDBox.TabIndex = 9;
             // 
             // Form1
             // 
@@ -257,13 +272,13 @@
             this.panel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.redrawFreq)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.delaySlider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxIters)).EndInit();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.delaySlider)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.redrawFreq)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -290,6 +305,7 @@
         private System.Windows.Forms.Timer iterTimer;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TrackBar redrawFreq;
+        private System.Windows.Forms.ComboBox algoDDBox;
     }
 }
 
