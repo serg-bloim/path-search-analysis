@@ -68,10 +68,13 @@ namespace AlgoUI
                             Brush brush;
                             if (v.HasFlag(CellFlags.VISITED) && !v.HasFlag(CellFlags.START) && !v.HasFlag(CellFlags.END))
                             {
-                                brush = yBrush;
                                 if (v.HasFlag(CellFlags.FRONTIER))
                                 {
-                                    brush = sBrush;
+                                    brush = yBrush;
+                                }
+                                else
+                                {
+                                    brush = getBrush(Color.FromArgb(255,0,0,Math.Max(255 - alg.distMap[x,y]*3, 0)));
                                 }
                                 e.Graphics.FillRectangle(brush, x, y, 1, 1);
                             }

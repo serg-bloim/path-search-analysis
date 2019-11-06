@@ -24,7 +24,7 @@ namespace Algo
 
     public class FloodSearch
     {
-        private Map<int> distMap;
+        public Map<int> distMap;
         public Map<CellFlags> pathFlagsMap;
         private Map<Cell> map;
         LinkedList<Point> frontier = new LinkedList<Point>();
