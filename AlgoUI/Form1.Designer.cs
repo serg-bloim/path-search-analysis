@@ -47,6 +47,7 @@
             this.delaySlider = new System.Windows.Forms.TrackBar();
             this.iterTimer = new System.Windows.Forms.Timer(this.components);
             this.button1 = new System.Windows.Forms.Button();
+            this.redrawFreq = new System.Windows.Forms.TrackBar();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.maxIters)).BeginInit();
@@ -54,6 +55,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.delaySlider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.redrawFreq)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -69,13 +71,14 @@
             // panel4
             // 
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(0, 185);
+            this.panel4.Location = new System.Drawing.Point(0, 244);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(200, 241);
+            this.panel4.Size = new System.Drawing.Size(200, 182);
             this.panel4.TabIndex = 1;
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.redrawFreq);
             this.panel3.Controls.Add(this.button1);
             this.panel3.Controls.Add(this.delaySlider);
             this.panel3.Controls.Add(this.runTillEndBtn);
@@ -87,7 +90,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(200, 185);
+            this.panel3.Size = new System.Drawing.Size(200, 244);
             this.panel3.TabIndex = 0;
             // 
             // runTillEndBtn
@@ -110,11 +113,16 @@
             // maxIters
             // 
             this.maxIters.Location = new System.Drawing.Point(93, 64);
+            this.maxIters.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
             this.maxIters.Name = "maxIters";
             this.maxIters.Size = new System.Drawing.Size(74, 20);
             this.maxIters.TabIndex = 3;
             this.maxIters.Value = new decimal(new int[] {
-            100,
+            10000,
             0,
             0,
             0});
@@ -203,7 +211,6 @@
             // 
             this.delaySlider.Location = new System.Drawing.Point(12, 119);
             this.delaySlider.Maximum = 2000;
-            this.delaySlider.Minimum = 1;
             this.delaySlider.Name = "delaySlider";
             this.delaySlider.Size = new System.Drawing.Size(182, 45);
             this.delaySlider.SmallChange = 10;
@@ -224,6 +231,16 @@
             this.button1.Text = "stopBtn";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // redrawFreq
+            // 
+            this.redrawFreq.Location = new System.Drawing.Point(12, 169);
+            this.redrawFreq.Maximum = 1000;
+            this.redrawFreq.Minimum = 1;
+            this.redrawFreq.Name = "redrawFreq";
+            this.redrawFreq.Size = new System.Drawing.Size(182, 45);
+            this.redrawFreq.TabIndex = 8;
+            this.redrawFreq.Value = 10;
             // 
             // Form1
             // 
@@ -246,6 +263,7 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.delaySlider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.redrawFreq)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -271,6 +289,7 @@
         private System.Windows.Forms.TrackBar delaySlider;
         private System.Windows.Forms.Timer iterTimer;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TrackBar redrawFreq;
     }
 }
 

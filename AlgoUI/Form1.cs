@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Point = Algo.Point;
@@ -39,7 +40,7 @@ namespace AlgoUI
         private void loadMap(String filename)
         {
             bmp = new Bitmap(Image.FromFile(filename));
-            canvas.Invalidate();
+            updateView();
         }
 
         private void panel2_Paint(object sender, PaintEventArgs e)
@@ -53,7 +54,7 @@ namespace AlgoUI
             {
                 if (alg != null)
                 {
-                    var watch = System.Diagnostics.Stopwatch.StartNew();
+                    //var watch = System.Diagnostics.Stopwatch.StartNew();
                     var scale = Math.Min((float)canvas.Width / bmp.Width, (float)canvas.Height / bmp.Height);
 
                     //e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
@@ -81,9 +82,9 @@ namespace AlgoUI
                             }
                         }
                     }
-                    watch.Stop();
-                    var elapsedMs = watch.ElapsedMilliseconds;
-                    System.Diagnostics.Debug.WriteLine("redraw took: {0}", elapsedMs);
+                    //watch.Stop();
+                    //var elapsedMs = watch.ElapsedMilliseconds;
+                    //System.Diagnostics.Debug.WriteLine("redraw took: {0}", elapsedMs);
                 }
             }
         }
@@ -91,6 +92,9 @@ namespace AlgoUI
         Dictionary<Color, Brush> brushCache = new Dictionary<Color, Brush>();
         private int iterN;
         private decimal stopAtIter;
+        private int delay;
+        private bool stop;
+        private Thread worker;
 
         private Brush getBrush(Color color)
         {
@@ -108,34 +112,47 @@ namespace AlgoUI
 
         private void panel2_SizeChanged(object sender, EventArgs e)
         {
-            canvas.Invalidate();
+            updateView();
         }
 
         private void runSingleIter_Click(object sender, EventArgs e)
         {
             runSingleIterInternal();
+            updateView();
+        }
+
+        private void updateView()
+        {
+            updateAlgoStatus();
+            canvas.Invalidate();
         }
 
         private void runSingleIterInternal()
         {
-            string startTime = DateTime.Now.ToString("hh.mm.ss.fff");
-            var watch = System.Diagnostics.Stopwatch.StartNew();
+            //string startTime = DateTime.Now.ToString("hh.mm.ss.fff");
+            //var watch = System.Diagnostics.Stopwatch.StartNew();
             if (alg != null && !alg.status.HasFlag(IterStatus.FINISHED))
             {
                 iterN++;
                 alg.iter();
-                updateAlgoStatus();
-                canvas.Invalidate();
             }
+            else
+            {
+                stop = true;
+            }
+
             // the code that you want to measure comes here
-            watch.Stop();
-            var elapsedMs = watch.ElapsedMilliseconds;
-            System.Diagnostics.Debug.WriteLine("{0} iter, took: {1}", startTime, elapsedMs);
+            //watch.Stop();
+            //var elapsedMs = watch.ElapsedMilliseconds;
+            //System.Diagnostics.Debug.WriteLine("{0} iter, took: {1}", startTime, elapsedMs);
         }
 
         private void updateAlgoStatus()
         {
-            statusLbl.Text = alg.status.ToString();
+            if (alg != null)
+            {
+                statusLbl.Text = alg.status.ToString();
+            }
         }
 
         private void startBtn_Click(object sender, EventArgs e)
@@ -167,7 +184,8 @@ namespace AlgoUI
                 }
                 SearchContext ctx = new SearchContext(map, startCell, destCell);
                 alg = new FloodSearch(ctx);
-                canvas.Invalidate();
+                iterN = 0;
+                updateView();
             }
         }
 
@@ -179,7 +197,39 @@ namespace AlgoUI
         private void runNItersBtn_Click(object sender, EventArgs e)
         {
             stopAtIter = iterN + maxIters.Value;
-            iterTimer.Enabled = true;
+            //iterTimer.Enabled = true;
+            runThread();
+        }
+
+        private void runThread()
+        {
+            while (worker != null)
+            {
+                stop = true;
+                worker.Join();
+            }
+            worker = new Thread(runContinuously);
+            worker.Start();
+        }
+
+        private void runContinuously()
+        {
+            stop = false;
+            while (iterN < stopAtIter && !stop)
+            {
+                runSingleIterInternal();
+                this.Invoke((Action)(() =>
+                {
+                    if (iterN % redrawFreq.Value == 0)
+                    {
+                        updateView();
+                    }
+                }));
+                Thread.Sleep(delay);
+            }
+
+            this.Invoke((Action)updateView);
+            worker = null;
         }
 
         private void iterTimer_Tick(object sender, EventArgs e)
@@ -195,11 +245,13 @@ namespace AlgoUI
         private void button1_Click(object sender, EventArgs e)
         {
             iterTimer.Enabled = false;
+            stop = true;
         }
 
         private void delaySlider_ValueChanged(object sender, EventArgs e)
         {
-            iterTimer.Interval = delaySlider.Value;
+            //iterTimer.Interval = delaySlider.Value;
+            delay = delaySlider.Value;
         }
     }
 }
