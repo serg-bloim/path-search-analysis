@@ -4,20 +4,20 @@ using System.Text;
 
 namespace Algo
 {
-    public class FloodSearch : IPathSearch
+    public class AStarSearch : IPathSearch
     {
         public Map<int> distMap { get; private set; }
         public Map<CellFlags> pathFlagsMap { get; private set; }
         private Map<Cell> map;
-        LinkedList<Point> frontier = new LinkedList<Point>();
+        public PriorityQueue<Point, int> frontier = new PriorityQueue<Point, int>();
         private SearchContext ctx;
         public IterStatus status { get; private set; } = IterStatus.NONE;
 
-        public FloodSearch(SearchContext ctx)
+        public AStarSearch(SearchContext ctx)
         {
             this.ctx = ctx;
             map = ctx.map;
-            frontier.AddFirst(ctx.startCell);
+            frontier.Enqueue(ctx.startCell, ctx.heuristic(ctx.startCell));
             pathFlagsMap = new Map<CellFlags>(map.width, map.height);
             distMap = new Map<int>(map.width, map.height);
             for (int x = 0; x < distMap.width; x++)
@@ -38,15 +38,19 @@ namespace Algo
             {
                 return this.status;
             }
-            Point p = PollFirst();
+            Point p = frontier.Dequeue();
             pathFlagsMap[p] &= ~CellFlags.FRONTIER;
             status |= processCandidate(p, p.left());
             status |= processCandidate(p, p.right());
             status |= processCandidate(p, p.up());
             status |= processCandidate(p, p.down());
-            if (frontier.Count == 0)
+            if (frontier.Count() == 0)
             {
                 status |= IterStatus.FINISHED;
+            }
+            else if (frontier.PeekPriority() > distMap[ctx.dstCell]){
+                // It's impossible to improve the dist point.
+                status |= IterStatus.FINISHED | IterStatus.FOUND | IterStatus.OPTIMAL;
             }
             return status;
         }
@@ -59,22 +63,17 @@ namespace Algo
                 if (!flags.HasFlag(CellFlags.VISITED))
                 {
                     pathFlagsMap[to] = flags | CellFlags.VISITED | CellFlags.FRONTIER;
-                    frontier.AddLast(to);
-                    distMap[to] = distMap[from] + 1;
+                    int dist = distMap[from] + 1;
+                    distMap[to] = dist;
+                    int f = dist + ctx.heuristic(to);
+                    frontier.Enqueue(to, f);
                     if (to == ctx.dstCell)
                     {
-                        return IterStatus.FINISHED | IterStatus.FOUND;
+                        return IterStatus.FOUND;
                     }
                 }
             }
             return IterStatus.NONE;
-        }
-
-        private Point PollFirst()
-        {
-            var p = frontier.First.Value;
-            frontier.RemoveFirst();
-            return p;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace AlgoUI
     {
         private Bitmap bmp;
         private Map<Cell> map;
-        private FloodSearch alg;
+        private IPathSearch alg;
         Brush yBrush = Brushes.Yellow;
         Brush sBrush = Brushes.SkyBlue;
         Control canvas;
@@ -186,7 +186,7 @@ namespace AlgoUI
                     }
                 }
                 SearchContext ctx = new SearchContext(map, startCell, destCell);
-                alg = new FloodSearch(ctx);
+                alg = new AStarSearch(ctx);
                 iterN = 0;
                 updateView();
             }
