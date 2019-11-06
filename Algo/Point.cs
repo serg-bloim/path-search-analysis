@@ -30,5 +30,9 @@ namespace Algo
         {
             return new Point { x = x, y = y+1 };
         }
+        public override string ToString()
+        {
+            return "Point("+x+","+y+")";
+        }
     }
 }

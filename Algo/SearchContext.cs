@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace Algo
 {
     public class SearchContext
@@ -12,6 +14,11 @@ namespace Algo
             this.map = map;
             this.startCell = startCell;
             this.dstCell = destCell;
+        }
+
+        internal bool isWalkable(Point to)
+        {
+            return map[to].isWalkable;
         }
     }
 }

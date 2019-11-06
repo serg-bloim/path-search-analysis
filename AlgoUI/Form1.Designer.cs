@@ -28,24 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.runTillEndBtn = new System.Windows.Forms.Button();
+            this.statusLbl = new System.Windows.Forms.Label();
+            this.maxIters = new System.Windows.Forms.NumericUpDown();
+            this.runNItersBtn = new System.Windows.Forms.Button();
             this.startBtn = new System.Windows.Forms.Button();
             this.runSingleIter = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.runNItersBtn = new System.Windows.Forms.Button();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.statusLbl = new System.Windows.Forms.Label();
-            this.runTillEndBtn = new System.Windows.Forms.Button();
+            this.delaySlider = new System.Windows.Forms.TrackBar();
+            this.iterTimer = new System.Windows.Forms.Timer(this.components);
+            this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.maxIters)).BeginInit();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.delaySlider)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -68,9 +76,11 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.button1);
+            this.panel3.Controls.Add(this.delaySlider);
             this.panel3.Controls.Add(this.runTillEndBtn);
             this.panel3.Controls.Add(this.statusLbl);
-            this.panel3.Controls.Add(this.numericUpDown1);
+            this.panel3.Controls.Add(this.maxIters);
             this.panel3.Controls.Add(this.runNItersBtn);
             this.panel3.Controls.Add(this.startBtn);
             this.panel3.Controls.Add(this.runSingleIter);
@@ -79,6 +89,45 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(200, 185);
             this.panel3.TabIndex = 0;
+            // 
+            // runTillEndBtn
+            // 
+            this.runTillEndBtn.Location = new System.Drawing.Point(12, 90);
+            this.runTillEndBtn.Name = "runTillEndBtn";
+            this.runTillEndBtn.Size = new System.Drawing.Size(75, 23);
+            this.runTillEndBtn.TabIndex = 5;
+            this.runTillEndBtn.Text = "Run Till End";
+            this.runTillEndBtn.UseVisualStyleBackColor = true;
+            // 
+            // statusLbl
+            // 
+            this.statusLbl.AutoSize = true;
+            this.statusLbl.Location = new System.Drawing.Point(12, 169);
+            this.statusLbl.Name = "statusLbl";
+            this.statusLbl.Size = new System.Drawing.Size(0, 13);
+            this.statusLbl.TabIndex = 4;
+            // 
+            // maxIters
+            // 
+            this.maxIters.Location = new System.Drawing.Point(93, 64);
+            this.maxIters.Name = "maxIters";
+            this.maxIters.Size = new System.Drawing.Size(74, 20);
+            this.maxIters.TabIndex = 3;
+            this.maxIters.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
+            // runNItersBtn
+            // 
+            this.runNItersBtn.Location = new System.Drawing.Point(12, 61);
+            this.runNItersBtn.Name = "runNItersBtn";
+            this.runNItersBtn.Size = new System.Drawing.Size(75, 23);
+            this.runNItersBtn.TabIndex = 2;
+            this.runNItersBtn.Text = "Run #";
+            this.runNItersBtn.UseVisualStyleBackColor = true;
+            this.runNItersBtn.Click += new System.EventHandler(this.runNItersBtn_Click);
             // 
             // startBtn
             // 
@@ -102,6 +151,7 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.pictureBox1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(200, 24);
             this.panel2.Name = "panel2";
@@ -109,6 +159,16 @@
             this.panel2.TabIndex = 1;
             this.panel2.SizeChanged += new System.EventHandler(this.panel2_SizeChanged);
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(600, 426);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             // 
             // menuStrip1
             // 
@@ -139,38 +199,31 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // runNItersBtn
+            // delaySlider
             // 
-            this.runNItersBtn.Location = new System.Drawing.Point(12, 61);
-            this.runNItersBtn.Name = "runNItersBtn";
-            this.runNItersBtn.Size = new System.Drawing.Size(75, 23);
-            this.runNItersBtn.TabIndex = 2;
-            this.runNItersBtn.Text = "Run #";
-            this.runNItersBtn.UseVisualStyleBackColor = true;
+            this.delaySlider.Location = new System.Drawing.Point(12, 119);
+            this.delaySlider.Maximum = 2000;
+            this.delaySlider.Minimum = 1;
+            this.delaySlider.Name = "delaySlider";
+            this.delaySlider.Size = new System.Drawing.Size(182, 45);
+            this.delaySlider.SmallChange = 10;
+            this.delaySlider.TabIndex = 6;
+            this.delaySlider.Value = 1;
+            this.delaySlider.ValueChanged += new System.EventHandler(this.delaySlider_ValueChanged);
             // 
-            // numericUpDown1
+            // iterTimer
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(93, 64);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown1.TabIndex = 3;
+            this.iterTimer.Tick += new System.EventHandler(this.iterTimer_Tick);
             // 
-            // status
+            // button1
             // 
-            this.statusLbl.AutoSize = true;
-            this.statusLbl.Location = new System.Drawing.Point(12, 169);
-            this.statusLbl.Name = "status";
-            this.statusLbl.Size = new System.Drawing.Size(0, 13);
-            this.statusLbl.TabIndex = 4;
-            // 
-            // runTillEndBtn
-            // 
-            this.runTillEndBtn.Location = new System.Drawing.Point(12, 90);
-            this.runTillEndBtn.Name = "runTillEndBtn";
-            this.runTillEndBtn.Size = new System.Drawing.Size(75, 23);
-            this.runTillEndBtn.TabIndex = 5;
-            this.runTillEndBtn.Text = "Run Till End";
-            this.runTillEndBtn.UseVisualStyleBackColor = true;
+            this.button1.Location = new System.Drawing.Point(93, 90);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "stopBtn";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 
@@ -180,15 +233,19 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip1);
+            this.DoubleBuffered = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Form1";
             this.panel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.maxIters)).EndInit();
+            this.panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.delaySlider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -208,8 +265,12 @@
         private System.Windows.Forms.Button startBtn;
         private System.Windows.Forms.Button runTillEndBtn;
         private System.Windows.Forms.Label statusLbl;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown maxIters;
         private System.Windows.Forms.Button runNItersBtn;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.TrackBar delaySlider;
+        private System.Windows.Forms.Timer iterTimer;
+        private System.Windows.Forms.Button button1;
     }
 }
 

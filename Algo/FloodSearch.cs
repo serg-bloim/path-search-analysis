@@ -14,10 +14,12 @@ namespace Algo
     [Flags]
     public enum CellFlags
     {
-        TOP, 
-        LEFT,
-        VISITED,
-        FRONTIER,
+        TOP         = 0b1, 
+        LEFT        = 0b10,
+        VISITED     = 0b100,
+        FRONTIER    = 0b1000,
+        START       = 0b10000,
+        END         = 0b100000,
     }
 
     public class FloodSearch
@@ -44,6 +46,8 @@ namespace Algo
                 }
             }
             distMap[ctx.startCell] = 0;
+            pathFlagsMap[ctx.startCell] = CellFlags.VISITED | CellFlags.FRONTIER | CellFlags.START;
+            pathFlagsMap[ctx.dstCell] = CellFlags.END;
         }
 
         public IterStatus iter()
@@ -67,7 +71,7 @@ namespace Algo
 
         private IterStatus processCandidate(Point from, Point to)
         {
-            if (map[to].isWalkable)
+            if (ctx.isWalkable(to))
             {
             CellFlags flags = pathFlagsMap[to];
                 if (!flags.HasFlag(CellFlags.VISITED))
