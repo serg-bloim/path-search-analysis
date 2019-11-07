@@ -206,8 +206,8 @@ namespace AlgoUI
                     alg = new AStarSearch(ctx);
                     break;
                 case "A* - mod1":
-                    ctx = new SearchContextMod1(map, startCell, destCell);
-                    alg = new AStarSearch(ctx);
+                    ctx = new SearchContext(map, startCell, destCell);
+                    alg = new AStarSearchMod1(ctx);
                     break;
             }
         }

@@ -13,6 +13,11 @@ namespace Algo
             }
             return res;
         }
+        public static int dist(Point from , Point to)
+        {
+            return Utils.diff(to.x, from.x) + Utils.diff(to.y, from.y);
+        }
+
     }
     [Flags]
     public enum IterStatus
