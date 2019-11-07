@@ -128,8 +128,8 @@ namespace AlgoUI
             //var watch = System.Diagnostics.Stopwatch.StartNew();
             if (alg != null && !alg.status.HasFlag(IterStatus.FINISHED))
             {
-                iterN++;
-                alg.iter();
+                alg.runIter();
+                iterN = alg.getIterNum();
             }
             else
             {
@@ -185,24 +185,21 @@ namespace AlgoUI
 
         private void craeteAlgo(Map<Cell> map, Point startCell, Point destCell)
         {
+            ctx = new SearchContext(map, startCell, destCell);
             switch (algoDDBox.SelectedItem.ToString())
             {
                 case "Flood":
-                    ctx = new SearchContext(map, startCell, destCell);
                     alg = new FloodSearch(ctx);
                     break;
-                //case "A*":
-                //    ctx = new SearchContext(map, startCell, destCell);
-                //    alg = new AStarSearch(ctx);
-                //    break;
-                //case "A* - mod1":
-                //    ctx = new SearchContext(map, startCell, destCell);
-                //    alg = new AStarSearchMod1(ctx);
-                //    break;
-                //case "A* - mod2":
-                //    ctx = new SearchContext(map, startCell, destCell);
-                //    alg = new AStarSearchMod2(ctx);
-                //    break;
+                case "A*":
+                    alg = new AStarSearch(ctx);
+                    break;
+                case "A* - mod1":
+                    alg = new AStarSearchMod1(ctx);
+                    break;
+                case "A* - mod2":
+                    alg = new AStarSearchMod2(ctx);
+                    break;
             }
         }
 
@@ -269,6 +266,12 @@ namespace AlgoUI
         private void redrawFreq_ValueChanged(object sender, EventArgs e)
         {
             renderFreqLbl.Text = "Render every iterations: " + redrawFreq.Value;
+        }
+
+        private void runTillEndBtn_Click(object sender, EventArgs e)
+        {
+            stopAtIter = 999999;
+            runThread();
         }
     }
 }

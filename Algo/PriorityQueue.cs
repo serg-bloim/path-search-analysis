@@ -17,7 +17,7 @@ namespace Algo
     public class PriorityQueue<T, P> where P : IComparable<P>
     {
 
-        PriorityQueueInternal<PriorityEntry<T, P>> queue = new PriorityQueueInternal<PriorityEntry<T, P>>();
+        internal PriorityQueueInternal<PriorityEntry<T, P>> queue = new PriorityQueueInternal<PriorityEntry<T, P>>();
         public void Enqueue(T item, P priority)
         {
             PriorityEntry<T, P> pe;
@@ -48,7 +48,7 @@ namespace Algo
     // From http://visualstudiomagazine.com/articles/2012/11/01/priority-queues-with-c.aspx
     public class PriorityQueueInternal<T> where T : IComparable<T>
     {
-        private List<T> data;
+        public List<T> data;
 
         public PriorityQueueInternal()
         {

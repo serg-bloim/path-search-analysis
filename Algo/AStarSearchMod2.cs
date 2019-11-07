@@ -5,7 +5,7 @@ using System.Text;
 namespace Algo
 {
 
-    public class AStarSearchMod2 : IPathSearch
+    public class AStarSearchMod2 : IterBasedPathSearch
     {
         public struct PriorityEntry : IComparable<PriorityEntry>
         {
@@ -23,20 +23,17 @@ namespace Algo
                 }
             }
         }
-        public Map<int> distMap { get; private set; }
-        public Map<CellFlags> pathFlagsMap { get; private set; }
-        private Map<Cell> map;
+        public Map<int> distMap;
+        public Map<CellFlags> pathFlagsMap;
         public PriorityQueue<Point, PriorityEntry> frontier = new PriorityQueue<Point, PriorityEntry>();
         private SearchContext ctx;
-        public IterStatus status { get; private set; } = IterStatus.NONE;
 
         public AStarSearchMod2(SearchContext ctx)
         {
             this.ctx = ctx;
-            map = ctx.map;
             frontier.Enqueue(ctx.startCell, new PriorityEntry { total = ctx.heuristic(ctx.startCell), remaining = Utils.dist(ctx.startCell, ctx.dstCell) });
-            pathFlagsMap = new Map<CellFlags>(map.width, map.height);
-            distMap = new Map<int>(map.width, map.height);
+            pathFlagsMap = new Map<CellFlags>(ctx.width, ctx.height);
+            distMap = new Map<int>(ctx.width, ctx.height);
             for (int x = 0; x < distMap.width; x++)
             {
                 for (int y = 0; y < distMap.height; y++)
@@ -49,7 +46,7 @@ namespace Algo
             pathFlagsMap[ctx.dstCell] = CellFlags.END;
         }
 
-        public IterStatus iter()
+        public override IterStatus runIterInternal()
         {
             if (this.status.HasFlag(IterStatus.FINISHED))
             {
@@ -100,6 +97,28 @@ namespace Algo
             double theta2 = Math.Atan2(origin.y - vector2.y, origin.x - vector2.x);
 
             return Math.Abs(theta1 - theta2) * 180 / Math.PI;
+        }
+        public override ICollection<Point> getVisitedPoints()
+        {
+            List<Point> list = new List<Point>();
+            pathFlagsMap.Foreach((int x, int y, CellFlags fs) =>
+            {
+                if (fs.HasFlag(CellFlags.VISITED))
+                {
+                    list.Add(Point.of(x, y));
+                }
+            });
+            return list;
+        }
+
+        public override ICollection<Point> getFrontierPoints()
+        {
+            var list = new List<Point>();
+            foreach (var e in frontier.queue.data)
+            {
+                list.Add(e.value);
+            }
+            return list;
         }
     }
 }

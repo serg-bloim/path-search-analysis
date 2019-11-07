@@ -5,8 +5,9 @@ namespace Algo
     public interface IPathSearch
     {
         IterStatus status { get; }
-        List<Point> getVisitedPoints();
-        List<Point> getFrontierPoints();
-        IterStatus iter();
+        ICollection<Point> getVisitedPoints();
+        ICollection<Point> getFrontierPoints();
+        int getIterNum();
+        IterStatus runIter();
     }
 }

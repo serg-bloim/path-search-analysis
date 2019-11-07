@@ -151,6 +151,7 @@
             this.runTillEndBtn.TabIndex = 5;
             this.runTillEndBtn.Text = "Run Till End";
             this.runTillEndBtn.UseVisualStyleBackColor = true;
+            this.runTillEndBtn.Click += new System.EventHandler(this.runTillEndBtn_Click);
             // 
             // statusLbl
             // 

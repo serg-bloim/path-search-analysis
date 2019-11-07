@@ -4,22 +4,19 @@ using System.Text;
 
 namespace Algo
 {
-    public class FloodSearch : IPathSearch
+    public class FloodSearch : IterBasedPathSearch
     {
-        public Map<int> distMap { get; private set; }
-        public Map<CellFlags> pathFlagsMap { get; private set; }
-        private Map<Cell> map;
+        public Map<int> distMap;
+        public Map<CellFlags> pathFlagsMap;
         LinkedList<Point> frontier = new LinkedList<Point>();
         private SearchContext ctx;
-        public IterStatus status { get; private set; } = IterStatus.NONE;
 
         public FloodSearch(SearchContext ctx)
         {
             this.ctx = ctx;
-            map = ctx.map;
             frontier.AddFirst(ctx.startCell);
-            pathFlagsMap = new Map<CellFlags>(map.width, map.height);
-            distMap = new Map<int>(map.width, map.height);
+            pathFlagsMap = new Map<CellFlags>(ctx.width, ctx.height);
+            distMap = new Map<int>(ctx.width, ctx.height);
             for (int x = 0; x < distMap.width; x++)
             {
                 for (int y = 0; y < distMap.height; y++)
@@ -32,12 +29,9 @@ namespace Algo
             pathFlagsMap[ctx.dstCell] = CellFlags.END;
         }
 
-        public IterStatus iter()
+        public override IterStatus runIterInternal()
         {
-            if (this.status.HasFlag(IterStatus.FINISHED))
-            {
-                return this.status;
-            }
+
             Point p = PollFirst();
             pathFlagsMap[p] &= ~CellFlags.FRONTIER;
             status |= processCandidate(p, p.left());
@@ -77,7 +71,7 @@ namespace Algo
             return p;
         }
 
-        public List<Point> getVisitedPoints()
+        public override ICollection<Point> getVisitedPoints()
         {
             List<Point> list = new List<Point>();
             pathFlagsMap.Foreach((int x, int y, CellFlags fs) =>
@@ -90,9 +84,9 @@ namespace Algo
             return list;
         }
 
-        public List<Point> getFrontierPoints()
+        public override ICollection<Point> getFrontierPoints()
         {
-            return new List<Point>();
+            return frontier;
         }
     }
 }
