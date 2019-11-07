@@ -10,7 +10,7 @@ namespace Algo
 
         public override string name => "Flood";
 
-        internal override void initInternal(SearchContext ctx)
+        protected override void initInternal(SearchContext ctx)
         {
             frontier = new LinkedList<Point>();
             frontier.AddFirst(ctx.startCell);
@@ -75,5 +75,6 @@ namespace Algo
         {
             return frontier;
         }
+
     }
 }

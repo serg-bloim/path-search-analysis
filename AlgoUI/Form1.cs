@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -44,8 +45,12 @@ namespace AlgoUI
         private void initAlgos()
         {
             SortedDictionary<string, Type> algos = new SortedDictionary<string, Type>();
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            foreach (var assembly in assemblies)
+            var allAssemblies = new List<Assembly>();
+            var staticAssemblies = AppDomain.CurrentDomain.GetAssemblies();
+            allAssemblies.AddRange(staticAssemblies);
+            foreach (string dll in Directory.GetFiles(Directory.GetCurrentDirectory(), "*.dll"))
+                allAssemblies.Add(Assembly.LoadFile(dll));
+            foreach (var assembly in allAssemblies)
             {
                 foreach (var t in assembly.GetTypes())
                 {

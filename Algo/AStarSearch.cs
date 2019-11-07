@@ -9,7 +9,7 @@ namespace Algo
 
         public override string name => "A*";
 
-        internal override void initInternal(SearchContext ctx)
+        protected override void initInternal(SearchContext ctx)
         {
             frontier.Enqueue(ctx.startCell, heuristic(ctx.startCell));
         }

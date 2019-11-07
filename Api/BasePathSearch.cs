@@ -6,7 +6,7 @@ namespace Algo
     public abstract class BasePathSearch<T> : IPathSearch where T:IComparable<T>
     {
         int iters = 0;
-        internal SearchContext ctx;
+        protected SearchContext ctx;
         public Map<int> distMap;
         public Map<CellFlags> pathFlagsMap;
         public PriorityQueue<Point, T> frontier = new PriorityQueue<Point, T>();
@@ -38,7 +38,7 @@ namespace Algo
             pathFlagsMap[ctx.dstCell] = CellFlags.END;
             initInternal(ctx);
         }
-        internal abstract void initInternal(SearchContext ctx);
+        protected abstract void initInternal(SearchContext ctx);
 
         public IterStatus runIter()
         {

@@ -37,6 +37,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing.Common, Version=4.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Drawing.Common.4.6.0\lib\net461\System.Drawing.Common.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -84,9 +85,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AlgoStd\AlgoStd.csproj">
+      <Project>{348e5b4b-af7d-43f3-9801-f667ebde891c}</Project>
+      <Name>AlgoStd</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Algo\Algo.csproj">
       <Project>{058661ca-ff2b-48a0-8f5e-08e13a854019}</Project>
       <Name>Algo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Api\Api.csproj">
+      <Project>{9971f024-17a4-4441-94e6-a0abf76130c1}</Project>
+      <Name>Api</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +103,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /y $(ProjectDir)\resources\*  $(ProjectDir)$(OutDir)</PostBuildEvent>
+    <PostBuildEvent>xcopy /y $(ProjectDir)\resources\*  $(ProjectDir)$(OutDir)
+xcopy /y $(ProjectDir)\resources\*  $(ProjectDir)$(OutDir)</PostBuildEvent>
   </PropertyGroup>
 </Project>

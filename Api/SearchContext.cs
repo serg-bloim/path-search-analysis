@@ -20,7 +20,7 @@ namespace Algo
             this.dstCell = destCell;
         }
 
-        internal bool isWalkable(Point to)
+        public bool isWalkable(Point to)
         {
             return map[to].isWalkable;
         }

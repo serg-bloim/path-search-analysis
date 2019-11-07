@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Algo
 {
-    struct PriorityEntry<T, P> : IComparable<PriorityEntry<T, P>> where P : IComparable<P>
+    public struct PriorityEntry<T, P> : IComparable<PriorityEntry<T, P>> where P : IComparable<P>
     {
         public T value;
         public P priority;
@@ -17,7 +17,7 @@ namespace Algo
     public class PriorityQueue<T, P> where P : IComparable<P>
     {
 
-        internal PriorityQueueInternal<PriorityEntry<T, P>> queue = new PriorityQueueInternal<PriorityEntry<T, P>>();
+        public PriorityQueueInternal<PriorityEntry<T, P>> queue = new PriorityQueueInternal<PriorityEntry<T, P>>();
         public void Enqueue(T item, P priority)
         {
             PriorityEntry<T, P> pe;
