@@ -14,6 +14,11 @@ namespace Algo
             return !(a == b);
         }
 
+        public static Point operator -(Point a, Point b)
+        {
+            return new Point { x = a.x - b.x, y = a.y - b.y };
+        }
+
         public Point left()
         {
             return new Point { x = x - 1, y = y };

@@ -32,6 +32,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.algoDDBox = new System.Windows.Forms.ComboBox();
             this.redrawFreq = new System.Windows.Forms.TrackBar();
             this.button1 = new System.Windows.Forms.Button();
             this.delaySlider = new System.Windows.Forms.TrackBar();
@@ -48,7 +49,6 @@
             this.openMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.iterTimer = new System.Windows.Forms.Timer(this.components);
-            this.algoDDBox = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.redrawFreq)).BeginInit();
@@ -94,6 +94,19 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(200, 318);
             this.panel3.TabIndex = 0;
+            // 
+            // algoDDBox
+            // 
+            this.algoDDBox.FormattingEnabled = true;
+            this.algoDDBox.Items.AddRange(new object[] {
+            "Flood",
+            "A*",
+            "A* - mod1",
+            "A* - mod2"});
+            this.algoDDBox.Location = new System.Drawing.Point(12, 3);
+            this.algoDDBox.Name = "algoDDBox";
+            this.algoDDBox.Size = new System.Drawing.Size(121, 21);
+            this.algoDDBox.TabIndex = 9;
             // 
             // redrawFreq
             // 
@@ -244,18 +257,6 @@
             // iterTimer
             // 
             this.iterTimer.Tick += new System.EventHandler(this.iterTimer_Tick);
-            // 
-            // algoDDBox
-            // 
-            this.algoDDBox.FormattingEnabled = true;
-            this.algoDDBox.Items.AddRange(new object[] {
-            "Flood",
-            "A*",
-            "A* - mod1"});
-            this.algoDDBox.Location = new System.Drawing.Point(12, 3);
-            this.algoDDBox.Name = "algoDDBox";
-            this.algoDDBox.Size = new System.Drawing.Size(121, 21);
-            this.algoDDBox.TabIndex = 9;
             // 
             // Form1
             // 
