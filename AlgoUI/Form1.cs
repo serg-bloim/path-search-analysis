@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,16 +22,47 @@ namespace AlgoUI
         private IPathSearch alg;
         Brush yBrush = Brushes.Yellow;
         Brush sBrush = Brushes.SkyBlue;
-        Control canvas;
+
+        Dictionary<Color, Brush> brushCache = new Dictionary<Color, Brush>();
+        private int iterN;
+        private decimal stopAtIter;
+        private int delay;
+        private bool stop;
+        private Thread worker;
+
         public Form1()
         {
             InitializeComponent();
-            canvas = pictureBox1;
             algoDDBox.SelectedItem = algoDDBox.Items[0];
+            initAlgos();
             loadMap("simple.png");
             startBtn_Click(null, null);
             delayLbl.Text = "Iteration delay: " + delaySlider.Value + "ms";
             renderFreqLbl.Text = "Render every iterations: " + redrawFreq.Value;
+        }
+
+        private void initAlgos()
+        {
+            SortedDictionary<string, Type> algos = new SortedDictionary<string, Type>();
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            foreach (var assembly in assemblies)
+            {
+                foreach (var t in assembly.GetTypes())
+                {
+                    if (t.IsAbstract || t.IsInterface)
+                    {
+                        continue;
+                    }
+                    if (t.GetInterfaces().Contains(typeof(IPathSearch)))
+                    {
+                        IPathSearch obj = (IPathSearch)Activator.CreateInstance(t);
+                        algos.Add(obj.name, t);
+                    }
+                }
+            }
+            algoDDBox.DataSource = algos.ToList();
+            algoDDBox.DisplayMember = "Key";
+            algoDDBox.ValueMember = "Value";
         }
 
         private void openMapToolStripMenuItem_Click(object sender, EventArgs e)
@@ -49,7 +81,6 @@ namespace AlgoUI
 
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
-            draw(e);
         }
 
         private void draw(PaintEventArgs e)
@@ -59,7 +90,7 @@ namespace AlgoUI
                 if (alg != null)
                 {
                     //var watch = System.Diagnostics.Stopwatch.StartNew();
-                    var scale = Math.Min((float)canvas.Width / bmp.Width, (float)canvas.Height / bmp.Height);
+                    var scale = Math.Min((float)pictureBox1.Width / bmp.Width, (float)pictureBox1.Height / bmp.Height);
 
                     //e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
                     e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
@@ -84,13 +115,6 @@ namespace AlgoUI
             g.FillRectangle(b, p.x - 0.5f, p.y - 0.5f, 1, 1);
         }
 
-        Dictionary<Color, Brush> brushCache = new Dictionary<Color, Brush>();
-        private int iterN;
-        private decimal stopAtIter;
-        private int delay;
-        private bool stop;
-        private Thread worker;
-
         private Brush getBrush(Color color)
         {
             if (brushCache.ContainsKey(color))
@@ -105,11 +129,6 @@ namespace AlgoUI
             }
         }
 
-        private void panel2_SizeChanged(object sender, EventArgs e)
-        {
-            updateView();
-        }
-
         private void runSingleIter_Click(object sender, EventArgs e)
         {
             runSingleIterInternal();
@@ -119,7 +138,7 @@ namespace AlgoUI
         private void updateView()
         {
             updateAlgoStatus();
-            canvas.Invalidate();
+            pictureBox1.Invalidate();
         }
 
         private void runSingleIterInternal()
@@ -186,20 +205,11 @@ namespace AlgoUI
         private void craeteAlgo(Map<Cell> map, Point startCell, Point destCell)
         {
             ctx = new SearchContext(map, startCell, destCell);
-            switch (algoDDBox.SelectedItem.ToString())
+            var type = (Type)algoDDBox.SelectedValue;
+            if (type != null)
             {
-                case "Flood":
-                    alg = new FloodSearch(ctx);
-                    break;
-                case "A*":
-                    alg = new AStarSearch(ctx);
-                    break;
-                case "A* - mod1":
-                    alg = new AStarSearchMod1(ctx);
-                    break;
-                case "A* - mod2":
-                    alg = new AStarSearchMod2(ctx);
-                    break;
+            alg = (IPathSearch)Activator.CreateInstance(type);
+                alg.init(ctx);
             }
         }
 
@@ -272,6 +282,16 @@ namespace AlgoUI
         {
             stopAtIter = 999999;
             runThread();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_SizeChanged(object sender, EventArgs e)
+        {
+            pictureBox1.Invalidate();
         }
     }
 }

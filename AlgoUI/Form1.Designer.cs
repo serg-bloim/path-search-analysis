@@ -31,6 +31,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.renderFreqLbl = new System.Windows.Forms.Label();
+            this.delayLbl = new System.Windows.Forms.Label();
             this.algoDDBox = new System.Windows.Forms.ComboBox();
             this.redrawFreq = new System.Windows.Forms.TrackBar();
             this.button1 = new System.Windows.Forms.Button();
@@ -47,8 +49,6 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.delayLbl = new System.Windows.Forms.Label();
-            this.renderFreqLbl = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.redrawFreq)).BeginInit();
@@ -96,6 +96,24 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(200, 318);
             this.panel3.TabIndex = 0;
+            // 
+            // renderFreqLbl
+            // 
+            this.renderFreqLbl.AutoSize = true;
+            this.renderFreqLbl.Location = new System.Drawing.Point(14, 227);
+            this.renderFreqLbl.Name = "renderFreqLbl";
+            this.renderFreqLbl.Size = new System.Drawing.Size(122, 13);
+            this.renderFreqLbl.TabIndex = 11;
+            this.renderFreqLbl.Text = "Render every iterations :";
+            // 
+            // delayLbl
+            // 
+            this.delayLbl.AutoSize = true;
+            this.delayLbl.Location = new System.Drawing.Point(14, 154);
+            this.delayLbl.Name = "delayLbl";
+            this.delayLbl.Size = new System.Drawing.Size(87, 13);
+            this.delayLbl.TabIndex = 10;
+            this.delayLbl.Text = "Iteration Delay: 0";
             // 
             // algoDDBox
             // 
@@ -217,7 +235,7 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(600, 426);
             this.panel2.TabIndex = 1;
-            this.panel2.SizeChanged += new System.EventHandler(this.panel2_SizeChanged);
+            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // pictureBox1
             // 
@@ -227,6 +245,7 @@
             this.pictureBox1.Size = new System.Drawing.Size(600, 426);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.SizeChanged += new System.EventHandler(this.pictureBox1_SizeChanged);
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             // 
             // menuStrip1
@@ -258,24 +277,6 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // delayLbl
-            // 
-            this.delayLbl.AutoSize = true;
-            this.delayLbl.Location = new System.Drawing.Point(14, 154);
-            this.delayLbl.Name = "delayLbl";
-            this.delayLbl.Size = new System.Drawing.Size(87, 13);
-            this.delayLbl.TabIndex = 10;
-            this.delayLbl.Text = "Iteration Delay: 0";
-            // 
-            // renderFreqLbl
-            // 
-            this.renderFreqLbl.AutoSize = true;
-            this.renderFreqLbl.Location = new System.Drawing.Point(14, 227);
-            this.renderFreqLbl.Name = "renderFreqLbl";
-            this.renderFreqLbl.Size = new System.Drawing.Size(122, 13);
-            this.renderFreqLbl.TabIndex = 11;
-            this.renderFreqLbl.Text = "Render every iterations :";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -288,6 +289,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();

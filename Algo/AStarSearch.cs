@@ -4,29 +4,14 @@ using System.Text;
 
 namespace Algo
 {
-    public class AStarSearch : IterBasedPathSearch
+    public class AStarSearch : BasePathSearch<int>
     {
-        public Map<int> distMap;
-        public Map<CellFlags> pathFlagsMap;
-        public PriorityQueue<Point, int> frontier = new PriorityQueue<Point, int>();
-        private SearchContext ctx;
 
-        public AStarSearch(SearchContext ctx)
+        public override string name => "A*";
+
+        internal override void initInternal(SearchContext ctx)
         {
-            this.ctx = ctx;
-            frontier.Enqueue(ctx.startCell, ctx.heuristic(ctx.startCell));
-            pathFlagsMap = new Map<CellFlags>(ctx.width, ctx.height);
-            distMap = new Map<int>(ctx.width, ctx.height);
-            for (int x = 0; x < distMap.width; x++)
-            {
-                for (int y = 0; y < distMap.height; y++)
-                {
-                    distMap[x, y] = int.MaxValue;
-                }
-            }
-            distMap[ctx.startCell] = 0;
-            pathFlagsMap[ctx.startCell] = CellFlags.VISITED | CellFlags.FRONTIER | CellFlags.START;
-            pathFlagsMap[ctx.dstCell] = CellFlags.END;
+            frontier.Enqueue(ctx.startCell, heuristic(ctx.startCell));
         }
 
         public override IterStatus runIterInternal()
@@ -62,7 +47,7 @@ namespace Algo
                     pathFlagsMap[to] = flags | CellFlags.VISITED | CellFlags.FRONTIER;
                     int dist = distMap[from] + 1;
                     distMap[to] = dist;
-                    int f = dist + ctx.heuristic(to);
+                    int f = heuristic(to);
                     frontier.Enqueue(to, f);
                     if (to == ctx.dstCell)
                     {
@@ -71,6 +56,11 @@ namespace Algo
                 }
             }
             return IterStatus.NONE;
+        }
+
+        internal virtual int heuristic(Point to)
+        {
+            return distMap[to] + Utils.dist(to, ctx.dstCell);
         }
 
         public override ICollection<Point> getVisitedPoints()
@@ -95,5 +85,6 @@ namespace Algo
             }
             return list;
         }
+
     }
 }

@@ -4,29 +4,16 @@ using System.Text;
 
 namespace Algo
 {
-    public class FloodSearch : IterBasedPathSearch
+    public class FloodSearch : BasePathSearch<int>
     {
-        public Map<int> distMap;
-        public Map<CellFlags> pathFlagsMap;
         LinkedList<Point> frontier = new LinkedList<Point>();
-        private SearchContext ctx;
 
-        public FloodSearch(SearchContext ctx)
+        public override string name => "Flood";
+
+        internal override void initInternal(SearchContext ctx)
         {
-            this.ctx = ctx;
+            frontier = new LinkedList<Point>();
             frontier.AddFirst(ctx.startCell);
-            pathFlagsMap = new Map<CellFlags>(ctx.width, ctx.height);
-            distMap = new Map<int>(ctx.width, ctx.height);
-            for (int x = 0; x < distMap.width; x++)
-            {
-                for (int y = 0; y < distMap.height; y++)
-                {
-                    distMap[x, y] = int.MaxValue;
-                }
-            }
-            distMap[ctx.startCell] = 0;
-            pathFlagsMap[ctx.startCell] = CellFlags.VISITED | CellFlags.FRONTIER | CellFlags.START;
-            pathFlagsMap[ctx.dstCell] = CellFlags.END;
         }
 
         public override IterStatus runIterInternal()
