@@ -171,7 +171,7 @@ namespace AlgoUI
         {
             if (alg != null)
             {
-                statusLbl.Text = iterN + " : " + alg.status.ToString();
+                statusLbl.Text = alg.getIterNum() + " : " + alg.status.ToString();
             }
         }
 
@@ -214,7 +214,7 @@ namespace AlgoUI
             var type = (Type)algoDDBox.SelectedValue;
             if (type != null)
             {
-            alg = (IPathSearch)Activator.CreateInstance(type);
+                alg = (IPathSearch)Activator.CreateInstance(type);
                 alg.init(ctx);
             }
         }
@@ -238,24 +238,27 @@ namespace AlgoUI
                 stop = true;
                 worker.Join();
             }
-            worker = new Thread(runContinuously);
+            worker = new Thread(() => runContinuously());
             worker.Start();
         }
 
-        private void runContinuously()
+        private void runContinuously(bool nonStop = false)
         {
             stop = false;
             while (iterN < stopAtIter && !stop)
             {
                 runSingleIterInternal();
-                this.Invoke((Action)(() =>
+                if (!nonStop)
                 {
-                    if (iterN % redrawFreq.Value == 0)
+                    this.Invoke((Action)(() =>
                     {
-                        updateView();
-                    }
-                }));
-                Thread.Sleep(delay);
+                        if (iterN % redrawFreq.Value == 0)
+                        {
+                            updateView();
+                        }
+                    }));
+                    Thread.Sleep(delay);
+                }
             }
 
             this.Invoke((Action)updateView);
@@ -287,7 +290,30 @@ namespace AlgoUI
         private void runTillEndBtn_Click(object sender, EventArgs e)
         {
             stopAtIter = 999999;
-            runThread();
+            if (backgroundCB.Checked)
+            {
+                runThread();
+            }
+            else
+            {
+                runInSameThread();
+                updateAlgoStatus();
+                pictureBox1.Invalidate();
+            }
+        }
+
+        private void runInSameThread()
+        {
+            IterStatus stat = IterStatus.NONE;
+            int i = 0;
+            while (!stat.HasFlag(IterStatus.FINISHED))
+            {
+                if (i++ >= 9999)
+                {
+                    break;
+                }
+                stat = alg.runIter();
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)

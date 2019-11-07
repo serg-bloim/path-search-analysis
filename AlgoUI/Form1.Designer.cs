@@ -49,6 +49,7 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.backgroundCB = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.redrawFreq)).BeginInit();
@@ -72,13 +73,14 @@
             // panel4
             // 
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(0, 318);
+            this.panel4.Location = new System.Drawing.Point(0, 359);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(200, 108);
+            this.panel4.Size = new System.Drawing.Size(200, 67);
             this.panel4.TabIndex = 1;
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.backgroundCB);
             this.panel3.Controls.Add(this.renderFreqLbl);
             this.panel3.Controls.Add(this.delayLbl);
             this.panel3.Controls.Add(this.algoDDBox);
@@ -94,13 +96,13 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(200, 318);
+            this.panel3.Size = new System.Drawing.Size(200, 359);
             this.panel3.TabIndex = 0;
             // 
             // renderFreqLbl
             // 
             this.renderFreqLbl.AutoSize = true;
-            this.renderFreqLbl.Location = new System.Drawing.Point(14, 227);
+            this.renderFreqLbl.Location = new System.Drawing.Point(12, 239);
             this.renderFreqLbl.Name = "renderFreqLbl";
             this.renderFreqLbl.Size = new System.Drawing.Size(122, 13);
             this.renderFreqLbl.TabIndex = 11;
@@ -109,7 +111,7 @@
             // delayLbl
             // 
             this.delayLbl.AutoSize = true;
-            this.delayLbl.Location = new System.Drawing.Point(14, 154);
+            this.delayLbl.Location = new System.Drawing.Point(12, 166);
             this.delayLbl.Name = "delayLbl";
             this.delayLbl.Size = new System.Drawing.Size(87, 13);
             this.delayLbl.TabIndex = 10;
@@ -131,7 +133,7 @@
             // 
             // redrawFreq
             // 
-            this.redrawFreq.Location = new System.Drawing.Point(12, 243);
+            this.redrawFreq.Location = new System.Drawing.Point(10, 255);
             this.redrawFreq.Maximum = 500;
             this.redrawFreq.Minimum = 1;
             this.redrawFreq.Name = "redrawFreq";
@@ -152,7 +154,7 @@
             // 
             // delaySlider
             // 
-            this.delaySlider.Location = new System.Drawing.Point(12, 170);
+            this.delaySlider.Location = new System.Drawing.Point(10, 182);
             this.delaySlider.Maximum = 2000;
             this.delaySlider.Name = "delaySlider";
             this.delaySlider.Size = new System.Drawing.Size(182, 45);
@@ -174,7 +176,7 @@
             // statusLbl
             // 
             this.statusLbl.AutoSize = true;
-            this.statusLbl.Location = new System.Drawing.Point(12, 291);
+            this.statusLbl.Location = new System.Drawing.Point(10, 303);
             this.statusLbl.Name = "statusLbl";
             this.statusLbl.Size = new System.Drawing.Size(37, 13);
             this.statusLbl.TabIndex = 4;
@@ -213,7 +215,7 @@
             this.startBtn.Name = "startBtn";
             this.startBtn.Size = new System.Drawing.Size(75, 23);
             this.startBtn.TabIndex = 1;
-            this.startBtn.Text = "Start";
+            this.startBtn.Text = "Restart";
             this.startBtn.UseVisualStyleBackColor = true;
             this.startBtn.Click += new System.EventHandler(this.startBtn_Click);
             // 
@@ -277,6 +279,16 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // backgroundCB
+            // 
+            this.backgroundCB.AutoSize = true;
+            this.backgroundCB.Location = new System.Drawing.Point(12, 146);
+            this.backgroundCB.Name = "backgroundCB";
+            this.backgroundCB.Size = new System.Drawing.Size(178, 17);
+            this.backgroundCB.TabIndex = 12;
+            this.backgroundCB.Text = "Execute in a background thread";
+            this.backgroundCB.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -328,6 +340,7 @@
         private System.Windows.Forms.ComboBox algoDDBox;
         private System.Windows.Forms.Label renderFreqLbl;
         private System.Windows.Forms.Label delayLbl;
+        private System.Windows.Forms.CheckBox backgroundCB;
     }
 }
 
