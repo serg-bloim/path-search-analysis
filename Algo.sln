@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29503.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algo", "Algo\Algo.csproj", "{058661CA-FF2B-48A0-8F5E-08E13A854019}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Algo", "Algo\Algo.csproj", "{058661CA-FF2B-48A0-8F5E-08E13A854019}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgoUI", "AlgoUI\AlgoUI.csproj", "{563B032F-AF91-44E2-A188-9D9AFE8E6B9A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgoTests", "AlgoTests\AlgoTests.csproj", "{7BB98627-9775-4ACD-AC85-CE7C4FC46DCF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{563B032F-AF91-44E2-A188-9D9AFE8E6B9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{563B032F-AF91-44E2-A188-9D9AFE8E6B9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{563B032F-AF91-44E2-A188-9D9AFE8E6B9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BB98627-9775-4ACD-AC85-CE7C4FC46DCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BB98627-9775-4ACD-AC85-CE7C4FC46DCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BB98627-9775-4ACD-AC85-CE7C4FC46DCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BB98627-9775-4ACD-AC85-CE7C4FC46DCF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -107,11 +107,12 @@
             this.algoDDBox.Name = "algoDDBox";
             this.algoDDBox.Size = new System.Drawing.Size(121, 21);
             this.algoDDBox.TabIndex = 9;
+            this.algoDDBox.SelectedValueChanged += new System.EventHandler(this.algoDDBox_SelectedValueChanged);
             // 
             // redrawFreq
             // 
             this.redrawFreq.Location = new System.Drawing.Point(12, 196);
-            this.redrawFreq.Maximum = 1000;
+            this.redrawFreq.Maximum = 50;
             this.redrawFreq.Minimum = 1;
             this.redrawFreq.Name = "redrawFreq";
             this.redrawFreq.Size = new System.Drawing.Size(182, 45);

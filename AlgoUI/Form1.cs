@@ -281,5 +281,10 @@ namespace AlgoUI
             //iterTimer.Interval = delaySlider.Value;
             delay = delaySlider.Value;
         }
+
+        private void algoDDBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            startBtn.PerformClick();
+        }
     }
 }

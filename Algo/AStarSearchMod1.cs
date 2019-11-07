@@ -11,8 +11,12 @@ namespace Algo
         {
             public int total;
             public int remaining;
+
+            public int combined { get => remaining; }
+
             public int CompareTo(PriorityEntry other)
             {
+                return combined.CompareTo(other.combined);
                 if(total == other.total)
                 {
                     return remaining.CompareTo(other.remaining);

@@ -13,7 +13,7 @@ namespace Algo
             public double remaining;
             public int CompareTo(PriorityEntry other)
             {
-                if(total == other.total)
+                if (total == other.total)
                 {
                     return remaining.CompareTo(other.remaining);
                 }
@@ -34,7 +34,7 @@ namespace Algo
         {
             this.ctx = ctx;
             map = ctx.map;
-            frontier.Enqueue(ctx.startCell, new PriorityEntry { total = ctx.heuristic(ctx.startCell) , remaining = Utils.dist(ctx.startCell, ctx.dstCell)});
+            frontier.Enqueue(ctx.startCell, new PriorityEntry { total = ctx.heuristic(ctx.startCell), remaining = Utils.dist(ctx.startCell, ctx.dstCell) });
             pathFlagsMap = new Map<CellFlags>(map.width, map.height);
             distMap = new Map<int>(map.width, map.height);
             for (int x = 0; x < distMap.width; x++)
@@ -65,7 +65,8 @@ namespace Algo
             {
                 status |= IterStatus.FINISHED;
             }
-            else if (frontier.PeekPriority().total > distMap[ctx.dstCell]){
+            else if (frontier.PeekPriority().total > distMap[ctx.dstCell])
+            {
                 // It's impossible to improve the dist point.
                 status |= IterStatus.FINISHED | IterStatus.FOUND | IterStatus.OPTIMAL;
             }
@@ -83,8 +84,8 @@ namespace Algo
                     int dist = distMap[from] + 1;
                     distMap[to] = dist;
                     var angle = AngleBetween(ctx.startCell, ctx.dstCell, to);
-                    int f = dist + ctx.heuristic(to);
-                    frontier.Enqueue(to, new PriorityEntry { total = f, remaining = angle});
+                    int f = dist + ctx.heuristic(to) +(int)angle;
+                    frontier.Enqueue(to, new PriorityEntry { total = f, remaining = angle });
                     if (to == ctx.dstCell)
                     {
                         return IterStatus.FOUND;
@@ -95,12 +96,10 @@ namespace Algo
         }
         public static double AngleBetween(Point origin, Point vector1, Point vector2)
         {
-            vector1 -= origin;
-            vector2 -= origin;
-            double sin = vector1.x * vector2.y - vector2.x * vector1.y;
-            double cos = vector1.x * vector2.x + vector1.y * vector2.y;
+            double theta1 = Math.Atan2(origin.y - vector1.y, origin.x - vector1.x);
+            double theta2 = Math.Atan2(origin.y - vector2.y, origin.x - vector2.x);
 
-            return Math.Atan2(sin, cos) * (180 / Math.PI);
+            return Math.Abs(theta1 - theta2) * 180 / Math.PI;
         }
     }
 }

@@ -19,6 +19,11 @@ namespace Algo
             return new Point { x = a.x - b.x, y = a.y - b.y };
         }
 
+        public static Point of(int x, int y)
+        {
+            return new Point { x = x, y = y };
+        }
+
         public Point left()
         {
             return new Point { x = x - 1, y = y };
