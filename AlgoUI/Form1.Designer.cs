@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -48,7 +47,8 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.iterTimer = new System.Windows.Forms.Timer(this.components);
+            this.delayLbl = new System.Windows.Forms.Label();
+            this.renderFreqLbl = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.redrawFreq)).BeginInit();
@@ -79,6 +79,8 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.renderFreqLbl);
+            this.panel3.Controls.Add(this.delayLbl);
             this.panel3.Controls.Add(this.algoDDBox);
             this.panel3.Controls.Add(this.redrawFreq);
             this.panel3.Controls.Add(this.button1);
@@ -111,13 +113,14 @@
             // 
             // redrawFreq
             // 
-            this.redrawFreq.Location = new System.Drawing.Point(12, 196);
-            this.redrawFreq.Maximum = 50;
+            this.redrawFreq.Location = new System.Drawing.Point(12, 243);
+            this.redrawFreq.Maximum = 500;
             this.redrawFreq.Minimum = 1;
             this.redrawFreq.Name = "redrawFreq";
             this.redrawFreq.Size = new System.Drawing.Size(182, 45);
             this.redrawFreq.TabIndex = 8;
             this.redrawFreq.Value = 10;
+            this.redrawFreq.ValueChanged += new System.EventHandler(this.redrawFreq_ValueChanged);
             // 
             // button1
             // 
@@ -131,7 +134,7 @@
             // 
             // delaySlider
             // 
-            this.delaySlider.Location = new System.Drawing.Point(12, 146);
+            this.delaySlider.Location = new System.Drawing.Point(12, 170);
             this.delaySlider.Maximum = 2000;
             this.delaySlider.Name = "delaySlider";
             this.delaySlider.Size = new System.Drawing.Size(182, 45);
@@ -152,7 +155,7 @@
             // statusLbl
             // 
             this.statusLbl.AutoSize = true;
-            this.statusLbl.Location = new System.Drawing.Point(12, 244);
+            this.statusLbl.Location = new System.Drawing.Point(12, 291);
             this.statusLbl.Name = "statusLbl";
             this.statusLbl.Size = new System.Drawing.Size(37, 13);
             this.statusLbl.TabIndex = 4;
@@ -214,7 +217,6 @@
             this.panel2.Size = new System.Drawing.Size(600, 426);
             this.panel2.TabIndex = 1;
             this.panel2.SizeChanged += new System.EventHandler(this.panel2_SizeChanged);
-            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // pictureBox1
             // 
@@ -255,9 +257,23 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // iterTimer
+            // delayLbl
             // 
-            this.iterTimer.Tick += new System.EventHandler(this.iterTimer_Tick);
+            this.delayLbl.AutoSize = true;
+            this.delayLbl.Location = new System.Drawing.Point(14, 154);
+            this.delayLbl.Name = "delayLbl";
+            this.delayLbl.Size = new System.Drawing.Size(87, 13);
+            this.delayLbl.TabIndex = 10;
+            this.delayLbl.Text = "Iteration Delay: 0";
+            // 
+            // renderFreqLbl
+            // 
+            this.renderFreqLbl.AutoSize = true;
+            this.renderFreqLbl.Location = new System.Drawing.Point(14, 227);
+            this.renderFreqLbl.Name = "renderFreqLbl";
+            this.renderFreqLbl.Size = new System.Drawing.Size(122, 13);
+            this.renderFreqLbl.TabIndex = 11;
+            this.renderFreqLbl.Text = "Render every iterations :";
             // 
             // Form1
             // 
@@ -304,10 +320,11 @@
         private System.Windows.Forms.Button runNItersBtn;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TrackBar delaySlider;
-        private System.Windows.Forms.Timer iterTimer;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TrackBar redrawFreq;
         private System.Windows.Forms.ComboBox algoDDBox;
+        private System.Windows.Forms.Label renderFreqLbl;
+        private System.Windows.Forms.Label delayLbl;
     }
 }
 

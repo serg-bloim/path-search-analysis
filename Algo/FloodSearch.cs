@@ -76,5 +76,23 @@ namespace Algo
             frontier.RemoveFirst();
             return p;
         }
+
+        public List<Point> getVisitedPoints()
+        {
+            List<Point> list = new List<Point>();
+            pathFlagsMap.Foreach((int x, int y, CellFlags fs) =>
+            {
+                if (fs.HasFlag(CellFlags.VISITED))
+                {
+                    list.Add(Point.of(x, y));
+                }
+            });
+            return list;
+        }
+
+        public List<Point> getFrontierPoints()
+        {
+            return new List<Point>();
+        }
     }
 }

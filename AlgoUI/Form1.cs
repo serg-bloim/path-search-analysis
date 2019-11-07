@@ -17,6 +17,7 @@ namespace AlgoUI
     {
         private Bitmap bmp;
         private Map<Cell> map;
+        private SearchContext ctx;
         private IPathSearch alg;
         Brush yBrush = Brushes.Yellow;
         Brush sBrush = Brushes.SkyBlue;
@@ -28,6 +29,8 @@ namespace AlgoUI
             algoDDBox.SelectedItem = algoDDBox.Items[0];
             loadMap("simple.png");
             startBtn_Click(null, null);
+            delayLbl.Text = "Iteration delay: " + delaySlider.Value + "ms";
+            renderFreqLbl.Text = "Render every iterations: " + redrawFreq.Value;
         }
 
         private void openMapToolStripMenuItem_Click(object sender, EventArgs e)
@@ -59,38 +62,26 @@ namespace AlgoUI
                     var scale = Math.Min((float)canvas.Width / bmp.Width, (float)canvas.Height / bmp.Height);
 
                     //e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
+                    e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
                     e.Graphics.ScaleTransform(scale, scale);
-                    //e.Graphics.DrawImage(bmp, 0, 0);
-                    for (int x = 0; x < alg.pathFlagsMap.width; x++)
+                    e.Graphics.DrawImage(bmp, 0, 0);
+                    foreach (Point p in alg.getVisitedPoints())
                     {
-                        for (int y = 0; y < alg.pathFlagsMap.height; y++)
-                        {
-                            var v = alg.pathFlagsMap[x, y];
-                            Brush brush;
-                            if (v.HasFlag(CellFlags.VISITED) && !v.HasFlag(CellFlags.START) && !v.HasFlag(CellFlags.END))
-                            {
-                                if (v.HasFlag(CellFlags.FRONTIER))
-                                {
-                                    brush = yBrush;
-                                }
-                                else
-                                {
-                                    brush = getBrush(Color.FromArgb(255,0,0,Math.Max(255 - alg.distMap[x,y]*3, 0)));
-                                }
-                                e.Graphics.FillRectangle(brush, x, y, 1, 1);
-                            }
-                            else
-                            {
-                                brush = getBrush(bmp.GetPixel(x, y));
-                                e.Graphics.FillRectangle(brush, x, y, 1, 1);
-                            }
-                        }
+                        drawPixel(e.Graphics, p, sBrush);
                     }
-                    //watch.Stop();
-                    //var elapsedMs = watch.ElapsedMilliseconds;
-                    //System.Diagnostics.Debug.WriteLine("redraw took: {0}", elapsedMs);
+                    foreach (Point p in alg.getFrontierPoints())
+                    {
+                        drawPixel(e.Graphics, p, yBrush);
+                    }
+                    drawPixel(e.Graphics, ctx.startCell, Brushes.Red);
+                    drawPixel(e.Graphics, ctx.dstCell, Brushes.Green);
                 }
             }
+        }
+
+        private void drawPixel(Graphics g, Point p, Brush b)
+        {
+            g.FillRectangle(b, p.x - 0.5f, p.y - 0.5f, 1, 1);
         }
 
         Dictionary<Color, Brush> brushCache = new Dictionary<Color, Brush>();
@@ -194,25 +185,24 @@ namespace AlgoUI
 
         private void craeteAlgo(Map<Cell> map, Point startCell, Point destCell)
         {
-            SearchContext ctx;
             switch (algoDDBox.SelectedItem.ToString())
             {
                 case "Flood":
                     ctx = new SearchContext(map, startCell, destCell);
                     alg = new FloodSearch(ctx);
                     break;
-                case "A*":
-                    ctx = new SearchContext(map, startCell, destCell);
-                    alg = new AStarSearch(ctx);
-                    break;
-                case "A* - mod1":
-                    ctx = new SearchContext(map, startCell, destCell);
-                    alg = new AStarSearchMod1(ctx);
-                    break;
-                case "A* - mod2":
-                    ctx = new SearchContext(map, startCell, destCell);
-                    alg = new AStarSearchMod2(ctx);
-                    break;
+                //case "A*":
+                //    ctx = new SearchContext(map, startCell, destCell);
+                //    alg = new AStarSearch(ctx);
+                //    break;
+                //case "A* - mod1":
+                //    ctx = new SearchContext(map, startCell, destCell);
+                //    alg = new AStarSearchMod1(ctx);
+                //    break;
+                //case "A* - mod2":
+                //    ctx = new SearchContext(map, startCell, destCell);
+                //    alg = new AStarSearchMod2(ctx);
+                //    break;
             }
         }
 
@@ -225,7 +215,6 @@ namespace AlgoUI
         private void runNItersBtn_Click(object sender, EventArgs e)
         {
             stopAtIter = iterN + maxIters.Value;
-            //iterTimer.Enabled = true;
             runThread();
         }
 
@@ -260,31 +249,26 @@ namespace AlgoUI
             worker = null;
         }
 
-        private void iterTimer_Tick(object sender, EventArgs e)
-        {
-            if (iterN == stopAtIter)
-            {
-                iterTimer.Enabled = false;
-                return;
-            }
-            runSingleIterInternal();
-        }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            iterTimer.Enabled = false;
             stop = true;
         }
 
         private void delaySlider_ValueChanged(object sender, EventArgs e)
         {
-            //iterTimer.Interval = delaySlider.Value;
             delay = delaySlider.Value;
+            delayLbl.Text = "Iteration delay: " + delaySlider.Value + "ms";
         }
 
         private void algoDDBox_SelectedValueChanged(object sender, EventArgs e)
         {
             startBtn.PerformClick();
+        }
+
+        private void redrawFreq_ValueChanged(object sender, EventArgs e)
+        {
+            renderFreqLbl.Text = "Render every iterations: " + redrawFreq.Value;
         }
     }
 }

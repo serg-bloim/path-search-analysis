@@ -25,5 +25,16 @@ namespace Algo
             this.height = height;
             map = new T[width, height];
         }
+
+        public void Foreach(Action<int, int, T> callback)
+        {
+            for(int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    callback.Invoke(x, y, map[x, y]);
+                }
+            }
+        }
     }
 }
