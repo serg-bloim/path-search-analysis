@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -30,6 +31,7 @@ namespace AlgoUI
         private int delay;
         private bool stop;
         private Thread worker;
+        private TimeSpan totalTime;
 
         public Form1()
         {
@@ -171,7 +173,7 @@ namespace AlgoUI
         {
             if (alg != null)
             {
-                statusLbl.Text = alg.getIterNum() + " : " + alg.status.ToString();
+                statusLbl.Text = $"{alg.getIterNum()} : {alg.status.ToString()}\nTotal time: {totalTime.Milliseconds}";
             }
         }
 
@@ -306,6 +308,7 @@ namespace AlgoUI
         {
             IterStatus stat = IterStatus.NONE;
             int i = 0;
+            Stopwatch sw = Stopwatch.StartNew();
             while (!stat.HasFlag(IterStatus.FINISHED))
             {
                 if (i++ >= 9999)
@@ -314,6 +317,7 @@ namespace AlgoUI
                 }
                 stat = alg.runIter();
             }
+            totalTime = sw.Elapsed;
         }
 
         private void Form1_Load(object sender, EventArgs e)
