@@ -75,6 +75,7 @@ namespace AlgoUI
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 loadMap(openFileDialog1.FileName);
+                startBtn.PerformClick();
             }
         }
 
