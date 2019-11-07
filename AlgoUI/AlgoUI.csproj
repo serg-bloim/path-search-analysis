@@ -97,6 +97,10 @@
       <Project>{9971f024-17a4-4441-94e6-a0abf76130c1}</Project>
       <Name>Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UnityAstar\UnityAstar.csproj">
+      <Project>{c60b1d42-da6c-43be-b21b-22200ac9e9c1}</Project>
+      <Name>UnityAstar</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="resources\simple.png" />

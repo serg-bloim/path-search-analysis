@@ -9,9 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgoUI", "AlgoUI\AlgoUI.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgoTests", "AlgoTests\AlgoTests.csproj", "{7BB98627-9775-4ACD-AC85-CE7C4FC46DCF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api\Api.csproj", "{9971F024-17A4-4441-94E6-A0ABF76130C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api\Api.csproj", "{9971F024-17A4-4441-94E6-A0ABF76130C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgoStd", "AlgoStd\AlgoStd.csproj", "{348E5B4B-AF7D-43F3-9801-F667EBDE891C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgoStd", "AlgoStd\AlgoStd.csproj", "{348E5B4B-AF7D-43F3-9801-F667EBDE891C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityAstar", "UnityAstar\UnityAstar.csproj", "{C60B1D42-DA6C-43BE-B21B-22200AC9E9C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{348E5B4B-AF7D-43F3-9801-F667EBDE891C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{348E5B4B-AF7D-43F3-9801-F667EBDE891C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{348E5B4B-AF7D-43F3-9801-F667EBDE891C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C60B1D42-DA6C-43BE-B21B-22200AC9E9C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C60B1D42-DA6C-43BE-B21B-22200AC9E9C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C60B1D42-DA6C-43BE-B21B-22200AC9E9C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C60B1D42-DA6C-43BE-B21B-22200AC9E9C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
