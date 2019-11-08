@@ -26,6 +26,7 @@ namespace Algo
             this.ctx = ctx;
             pathFlagsMap = new Map<CellFlags>(ctx.width, ctx.height);
             distMap = new Map<int>(ctx.width, ctx.height);
+            frontier = new PriorityQueue<Point, T>();
             for (int x = 0; x < distMap.width; x++)
             {
                 for (int y = 0; y < distMap.height; y++)
@@ -36,6 +37,8 @@ namespace Algo
             distMap[ctx.startCell] = 0;
             pathFlagsMap[ctx.startCell] = CellFlags.VISITED | CellFlags.FRONTIER | CellFlags.START;
             pathFlagsMap[ctx.dstCell] = CellFlags.END;
+            status = IterStatus.NONE;
+            iters = 0;
             initInternal(ctx);
         }
         protected abstract void initInternal(SearchContext ctx);

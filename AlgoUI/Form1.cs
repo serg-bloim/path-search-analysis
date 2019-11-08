@@ -23,7 +23,7 @@ namespace AlgoUI
         private SearchContext ctx;
         private IPathSearch alg;
         Brush yBrush = Brushes.Yellow;
-        Brush sBrush = Brushes.SkyBlue;
+        Brush sBrush = new SolidBrush(Color.FromArgb(100,Color.SkyBlue));
 
         Dictionary<Color, Brush> brushCache = new Dictionary<Color, Brush>();
         private int iterN;
@@ -31,7 +31,7 @@ namespace AlgoUI
         private int delay;
         private bool stop;
         private Thread worker;
-        private TimeSpan totalTime;
+        private long totalTime;
 
         public Form1()
         {
@@ -173,7 +173,7 @@ namespace AlgoUI
         {
             if (alg != null)
             {
-                statusLbl.Text = $"{alg.getIterNum()} : {alg.status.ToString()}\nTotal time: {totalTime.Milliseconds}";
+                statusLbl.Text = $"{alg.getIterNum()} : {alg.status.ToString()}\nTotal time: {totalTime}";
             }
         }
 
@@ -306,18 +306,24 @@ namespace AlgoUI
 
         private void runInSameThread()
         {
-            IterStatus stat = IterStatus.NONE;
-            int i = 0;
+            var start = DateTime.Now.Ticks;
             Stopwatch sw = Stopwatch.StartNew();
-            while (!stat.HasFlag(IterStatus.FINISHED))
+            for (int c = 0; c < fullCycles.Value; c++)
             {
-                if (i++ >= 9999)
+            IterStatus stat = IterStatus.NONE;
+                alg.init(ctx);
+                int i = 0;
+                while (!stat.HasFlag(IterStatus.FINISHED))
                 {
-                    break;
+                    if (i++ >= 9999)
+                    {
+                        break;
+                    }
+                    stat = alg.runIter();
                 }
-                stat = alg.runIter();
             }
-            totalTime = sw.Elapsed;
+            //totalTime = sw.Elapsed;
+            totalTime = (DateTime.Now.Ticks - start)/TimeSpan.TicksPerMillisecond;
         }
 
         private void Form1_Load(object sender, EventArgs e)

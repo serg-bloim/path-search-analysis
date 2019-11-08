@@ -31,6 +31,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.backgroundCB = new System.Windows.Forms.CheckBox();
             this.renderFreqLbl = new System.Windows.Forms.Label();
             this.delayLbl = new System.Windows.Forms.Label();
             this.algoDDBox = new System.Windows.Forms.ComboBox();
@@ -49,7 +50,7 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.backgroundCB = new System.Windows.Forms.CheckBox();
+            this.fullCycles = new System.Windows.Forms.NumericUpDown();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.redrawFreq)).BeginInit();
@@ -58,6 +59,7 @@
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fullCycles)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -80,6 +82,7 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.fullCycles);
             this.panel3.Controls.Add(this.backgroundCB);
             this.panel3.Controls.Add(this.renderFreqLbl);
             this.panel3.Controls.Add(this.delayLbl);
@@ -98,6 +101,16 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(200, 353);
             this.panel3.TabIndex = 0;
+            // 
+            // backgroundCB
+            // 
+            this.backgroundCB.AutoSize = true;
+            this.backgroundCB.Location = new System.Drawing.Point(12, 146);
+            this.backgroundCB.Name = "backgroundCB";
+            this.backgroundCB.Size = new System.Drawing.Size(178, 17);
+            this.backgroundCB.TabIndex = 12;
+            this.backgroundCB.Text = "Execute in a background thread";
+            this.backgroundCB.UseVisualStyleBackColor = true;
             // 
             // renderFreqLbl
             // 
@@ -144,7 +157,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(93, 117);
+            this.button1.Location = new System.Drawing.Point(115, 30);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 7;
@@ -169,7 +182,7 @@
             this.runTillEndBtn.Name = "runTillEndBtn";
             this.runTillEndBtn.Size = new System.Drawing.Size(75, 23);
             this.runTillEndBtn.TabIndex = 5;
-            this.runTillEndBtn.Text = "Run Till End";
+            this.runTillEndBtn.Text = "Run Full";
             this.runTillEndBtn.UseVisualStyleBackColor = true;
             this.runTillEndBtn.Click += new System.EventHandler(this.runTillEndBtn_Click);
             // 
@@ -184,7 +197,7 @@
             // 
             // maxIters
             // 
-            this.maxIters.Location = new System.Drawing.Point(93, 91);
+            this.maxIters.Location = new System.Drawing.Point(115, 88);
             this.maxIters.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -205,7 +218,7 @@
             this.runNItersBtn.Name = "runNItersBtn";
             this.runNItersBtn.Size = new System.Drawing.Size(75, 23);
             this.runNItersBtn.TabIndex = 2;
-            this.runNItersBtn.Text = "Run #";
+            this.runNItersBtn.Text = "Run iters #";
             this.runNItersBtn.UseVisualStyleBackColor = true;
             this.runNItersBtn.Click += new System.EventHandler(this.runNItersBtn_Click);
             // 
@@ -279,15 +292,22 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // backgroundCB
+            // fullCycles
             // 
-            this.backgroundCB.AutoSize = true;
-            this.backgroundCB.Location = new System.Drawing.Point(12, 146);
-            this.backgroundCB.Name = "backgroundCB";
-            this.backgroundCB.Size = new System.Drawing.Size(178, 17);
-            this.backgroundCB.TabIndex = 12;
-            this.backgroundCB.Text = "Execute in a background thread";
-            this.backgroundCB.UseVisualStyleBackColor = true;
+            this.fullCycles.Location = new System.Drawing.Point(115, 120);
+            this.fullCycles.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.fullCycles.Name = "fullCycles";
+            this.fullCycles.Size = new System.Drawing.Size(74, 20);
+            this.fullCycles.TabIndex = 13;
+            this.fullCycles.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // Form1
             // 
@@ -312,6 +332,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fullCycles)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -341,6 +362,7 @@
         private System.Windows.Forms.Label renderFreqLbl;
         private System.Windows.Forms.Label delayLbl;
         private System.Windows.Forms.CheckBox backgroundCB;
+        private System.Windows.Forms.NumericUpDown fullCycles;
     }
 }
 
