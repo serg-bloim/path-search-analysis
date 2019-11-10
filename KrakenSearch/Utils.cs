@@ -11,6 +11,11 @@ namespace System.MapLogic.KrakenSearch
         {
             return p >= lower && p <= upper;
         }
+
+        public static Region fromSinglePoint(Point p)
+        {
+            return new Region{lower = p, upper = p};
+        }
     }
 
     [Flags]

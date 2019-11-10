@@ -17,25 +17,9 @@ public class Vector2i
         this.y = y;
     }
 
-    public Vector2i(Vector2 v)
-    {
-        x = (int) v.x;
-        y = (int) v.y;
-    }
-
     public static Vector2i operator +(Vector2i c1, Vector2i c2)
     {
         return new Vector2i(c1.x + c2.x, c1.y + c2.y);
-    }
-
-    public static Vector2 operator +(Vector2i c1, Vector2 c2)
-    {
-        return new Vector3(c1.x + c2.x, c1.y + c2.y);
-    }
-
-    public static Vector2 operator +(Vector2 c1, Vector2i c2)
-    {
-        return new Vector3(c1.x + c2.x, c1.y + c2.y);
     }
 
     public static Vector2i operator -(Vector2i c1, Vector2i c2)
@@ -48,19 +32,9 @@ public class Vector2i
         return new Vector2i(c1.x * c2, c1.y * c2);
     }
 
-    public static Vector2 operator *(Vector2i c1, float c2)
-    {
-        return new Vector2(c1.x * c2, c1.y * c2);
-    }
-
     public static Vector2i operator *(int c1, Vector2i c2)
     {
         return new Vector2i(c1 * c2.x, c1 * c2.y);
-    }
-
-    public static Vector2 operator *(float c1, Vector2i c2)
-    {
-        return new Vector2(c1 * c2.x, c1 * c2.y);
     }
 
     // allow callers to initialize
@@ -81,16 +55,7 @@ public class Vector2i
         }
     }
 
-    public Vector2 toVector2()
-    {
-        return new Vector2(x, y);
-    }
-
-    public float magnitude
-    {
-        get { return Mathf.Sqrt(x * x + y * y); }
-    }
-
+ 
     public override bool Equals(System.Object obj)
     {
         // If parameter is null return false.

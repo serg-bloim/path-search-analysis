@@ -97,6 +97,10 @@
       <Project>{9971f024-17a4-4441-94e6-a0abf76130c1}</Project>
       <Name>Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KrakenSearchUIIntegration\KrakenSearchUIIntegration.csproj">
+      <Project>{a9944ac1-3b95-4623-9309-fee6070a9a55}</Project>
+      <Name>KrakenSearchUIIntegration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UnityAstar\UnityAstar.csproj">
       <Project>{c60b1d42-da6c-43be-b21b-22200ac9e9c1}</Project>
       <Name>UnityAstar</Name>

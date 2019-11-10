@@ -31,10 +31,7 @@ namespace System.MapLogic.KrakenSearch
             {
                 return 15;
             }
-            else
-            {
-                return 10;
-            }
+            return 10;
         }
 
         internal int estimateCost(Point p)
@@ -56,7 +53,7 @@ namespace System.MapLogic.KrakenSearch
         }
 
         public SearchContext(MapUnit mapUnit, Point start, Region destination, float distance,
-            bool staticOnly, int limits, NeighborStrategy neighborStrategy = NeighborStrategy.FOUR)
+            bool staticOnly, int limits=-1, NeighborStrategy neighborStrategy = NeighborStrategy.FOUR)
         {
             this.mapUnit = mapUnit;
             this.distance = distance;
@@ -65,6 +62,8 @@ namespace System.MapLogic.KrakenSearch
             this.start = start;
             this.destination = destination;
             this.neighborStrategy = neighborStrategy;
+            width = Interaction.width;
+            height = Interaction.height;
         }
     }
 }
