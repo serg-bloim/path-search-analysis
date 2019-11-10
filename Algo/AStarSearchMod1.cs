@@ -7,7 +7,6 @@ namespace Algo
 
     public class AStarSearchMod1 : AStarSearch
     {
-
         public override string name => "A* - mod1";
 
         internal override int heuristic(Point to)

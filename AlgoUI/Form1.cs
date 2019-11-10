@@ -32,6 +32,7 @@ namespace AlgoUI
         private bool stop;
         private Thread worker;
         private long totalTime;
+        private Brush bestPathBrush = Brushes.Coral;
 
         public Form1()
         {
@@ -111,6 +112,10 @@ namespace AlgoUI
                     foreach (Point p in alg.getFrontierPoints())
                     {
                         drawPixel(e.Graphics, p, yBrush);
+                    }
+                    foreach (Point p in alg.getPath())
+                    {
+                        drawPixel(e.Graphics, p, bestPathBrush);
                     }
                     drawPixel(e.Graphics, ctx.startCell, Brushes.Red);
                     drawPixel(e.Graphics, ctx.dstCell, Brushes.Green);

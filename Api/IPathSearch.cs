@@ -10,6 +10,7 @@ namespace Algo
         void init(SearchContext ctx);
         ICollection<Point> getVisitedPoints();
         ICollection<Point> getFrontierPoints();
+        ICollection<Point> getPath();
         int getIterNum();
         IterStatus runIter();
     }

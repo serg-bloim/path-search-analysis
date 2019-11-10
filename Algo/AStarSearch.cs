@@ -85,6 +85,5 @@ namespace Algo
             }
             return list;
         }
-
     }
 }

@@ -14,6 +14,7 @@ namespace KrakenSearchUIIntegration
         KrakenSearch algo = new KrakenSearch();
         private SearchState state = SearchState.NONE;
         private int iters;
+        private List<Point> path = new List<Point>();
         public string name => "Kraken";
         public IterStatus status { get; set; } = IterStatus.NONE;
         public void init(SearchContext ctx)
@@ -60,6 +61,11 @@ namespace KrakenSearchUIIntegration
             return list;
         }
 
+        public ICollection<Point> getPath()
+        {
+            return path;
+        }
+
         public int getIterNum() => iters;
 
         public IterStatus runIter()
@@ -67,6 +73,14 @@ namespace KrakenSearchUIIntegration
             iters++;
             state |= algo.runIter(state);
             status = toIterStatus(state);
+            if (state.ContainsFlag(SearchState.FOUND))
+            {
+                path = new List<Point>();
+                foreach (var p in algo.buildPath())
+                {
+                    path.Add(Point.of(p.x, p.y));
+                }
+            }
             return status;
         }
 

@@ -9,8 +9,8 @@ namespace System.MapLogic.KrakenSearch
         protected SearchContext ctx;
         public Map<int> distMap;
         public Map<CellFlags> pathFlagsMap;
+        public Map<Point> backtrack;
         public PriorityQueue<Point, int> frontier = new PriorityQueue<Point, int>();
-        private Point dstCell;
         private IterStatus status;
         private static int MAXIMUM_ITERS = 10000;
         private NeighborStrategy neighborStrategy = NeighborStrategy.FOUR;
@@ -22,6 +22,7 @@ namespace System.MapLogic.KrakenSearch
             this.ctx = ctx;
             pathFlagsMap = new Map<CellFlags>(ctx.width, ctx.height);
             distMap = new Map<int>(ctx.width, ctx.height);
+            backtrack = new Map<Point>(ctx.width, ctx.height);
             frontier = new PriorityQueue<Point, int>();
             for (int x = 0; x < distMap.width; x++)
             {
@@ -59,15 +60,19 @@ namespace System.MapLogic.KrakenSearch
             return new StandardSearchResult<Point>(stat, buildPath());
         }
 
-        private List<Point> buildPath()
+        public List<Point> buildPath()
         {
             var path = new List<Point>();
-            Point p = foundDest;
-            while (p != ctx.start)
-            {
-                path.Add(p);
-                Utils.followBackwards(p, pathFlagsMap[p]);
-            }
+//            if (status == IterStatus.FOUND)
+//            {
+                Point p = foundDest;
+                while (p != ctx.start)
+                {
+                    path.Add(p);
+                    p = backtrack[p];
+                }
+//            }
+
             return path;
         }
 
@@ -112,6 +117,7 @@ namespace System.MapLogic.KrakenSearch
                 if (new_dist < curr_dist)    //update then
                 {
                     pathFlagsMap[to] = flags | CellFlags.VISITED | CellFlags.FRONTIER | Utils.getDirection(from, to);
+                    backtrack[to] = from;
                     distMap[to] = new_dist;
                     int f = heuristic(to);
                     frontier.Enqueue(to, f);
@@ -119,6 +125,7 @@ namespace System.MapLogic.KrakenSearch
                     {
                         if (new_dist < dstCost)
                         {
+                            foundDest = to;
                             dstCost = new_dist;
                         }
                         return SearchState.FOUND;
