@@ -13,11 +13,13 @@ namespace KrakenSearchUIIntegration
         private SearchContext ctx;
         KrakenSearch algo = new KrakenSearch();
         private SearchState state = SearchState.NONE;
+        private int iters;
         public string name => "Kraken";
-        public IterStatus status { get; } = IterStatus.NONE;
+        public IterStatus status { get; set; } = IterStatus.NONE;
         public void init(SearchContext ctx)
         {
             this.ctx = ctx;
+            iters = 0;
             Interaction.walkChecker = (int x, int y) => ctx.isWalkable(Point.of(x, y));
             Interaction.width = ctx.width;
             Interaction.height = ctx.height;
@@ -58,12 +60,14 @@ namespace KrakenSearchUIIntegration
             return list;
         }
 
-        public int getIterNum() => algo.iters;
+        public int getIterNum() => iters;
 
         public IterStatus runIter()
         {
+            iters++;
             state |= algo.runIter(state);
-            return toIterStatus(state);
+            status = toIterStatus(state);
+            return status;
         }
 
         private IterStatus toIterStatus(SearchState s)

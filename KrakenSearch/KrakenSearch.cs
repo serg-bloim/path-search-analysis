@@ -15,6 +15,7 @@ namespace System.MapLogic.KrakenSearch
         private static int MAXIMUM_ITERS = 10000;
         private NeighborStrategy neighborStrategy = NeighborStrategy.FOUR;
         public int iters;
+        private int dstCost = Int32.MaxValue;
 
         public void init(SearchContext ctx)
         {
@@ -30,6 +31,7 @@ namespace System.MapLogic.KrakenSearch
                 }
             }
             distMap[ctx.start] = 0;
+            dstCost = Int32.MaxValue;
             pathFlagsMap[ctx.start] = CellFlags.VISITED | CellFlags.FRONTIER | CellFlags.START;
             status = IterStatus.NONE;
             frontier.Enqueue(ctx.start, heuristic(ctx.start));
@@ -60,12 +62,12 @@ namespace System.MapLogic.KrakenSearch
         private List<Point> buildPath()
         {
             var path = new List<Point>();
-//            Point p = foundDest;
-//            while (p != ctx.start)
-//            {
-//                path.Add(p);
-//                Utils.followBackwards(p, pathFlagsMap[p]);
-//            }
+            Point p = foundDest;
+            while (p != ctx.start)
+            {
+                path.Add(p);
+                Utils.followBackwards(p, pathFlagsMap[p]);
+            }
             return path;
         }
 
@@ -88,7 +90,7 @@ namespace System.MapLogic.KrakenSearch
             {
                 status |= SearchState.FINISHED;
             }
-            else if (frontier.PeekPriority() > distMap[dstCell]){
+            else if (frontier.PeekPriority() > dstCost){
                 // It's impossible to improve the dist point.
                 status |= SearchState.FINISHED | SearchState.FOUND | SearchState.OPTIMAL;
             }
@@ -107,30 +109,21 @@ namespace System.MapLogic.KrakenSearch
                     curr_dist = int.MaxValue;
                 }
                 int new_dist = distMap[from] + ctx.travelCost(from, to);
-                if (new_dist < curr_dist)
+                if (new_dist < curr_dist)    //update then
                 {
-                    //update then
                     pathFlagsMap[to] = flags | CellFlags.VISITED | CellFlags.FRONTIER | Utils.getDirection(from, to);
                     distMap[to] = new_dist;
                     int f = heuristic(to);
                     frontier.Enqueue(to, f);
                     if (ctx.isFinalState(to))
                     {
+                        if (new_dist < dstCost)
+                        {
+                            dstCost = new_dist;
+                        }
                         return SearchState.FOUND;
                     }
                 }
-//                if (!flags.ContainsFlag(CellFlags.VISITED))
-//                {
-//                    pathFlagsMap[to] = flags | CellFlags.VISITED | CellFlags.FRONTIER;
-//                    int dist = distMap[from] + ctx.travelCost(from, to);
-//                    distMap[to] = dist;
-//                    int f = heuristic(to);
-//                    frontier.Enqueue(to, f);
-//                    if (ctx.isFinalState(to))
-//                    {
-//                        return SearchState.FOUND;
-//                    }
-//                }
             }
             return SearchState.NONE;
         }
