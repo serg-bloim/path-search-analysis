@@ -8,7 +8,7 @@ using SearchContext = Algo.SearchContext;
 
 namespace KrakenSearchUIIntegration
 {
-    public class KrakenWrapper : IPathSearch
+    public class KrakenWrapper : IPathSearch2
     {
         private SearchContext ctx;
         KrakenSearch algo = new KrakenSearch();
@@ -21,6 +21,7 @@ namespace KrakenSearchUIIntegration
         {
             this.ctx = ctx;
             iters = 0;
+            state = SearchState.NONE;
             Interaction.walkChecker = (int x, int y) => ctx.isWalkable(Point.of(x, y));
             Interaction.width = ctx.width;
             Interaction.height = ctx.height;
@@ -73,7 +74,7 @@ namespace KrakenSearchUIIntegration
             iters++;
             state |= algo.runIter(state);
             status = toIterStatus(state);
-            if (state.ContainsFlag(SearchState.FOUND))
+            if (state.ContainsFlag(SearchState.FOUND | SearchState.FINISHED))
             {
                 path = new List<Point>();
                 foreach (var p in algo.buildPath())
@@ -82,6 +83,23 @@ namespace KrakenSearchUIIntegration
                 }
             }
             return status;
+        }
+
+        public IterStatus runTillEnd()
+        {
+            var searchResult = algo.search();
+            state =searchResult.getSearchState();
+            status = toIterStatus(state);
+            if (state.ContainsFlag(SearchState.FOUND | SearchState.FINISHED))
+            {
+                path = new List<Point>();
+                foreach (var p in algo.buildPath())
+                {
+                    path.Add(Point.of(p.x, p.y));
+                }
+            }
+            return status;
+
         }
 
         private IterStatus toIterStatus(SearchState s)

@@ -43,9 +43,8 @@ namespace System.MapLogic.KrakenSearch
             return distMap[p] + ctx.estimateCost(p);
         }
 
-        public ISearchResult<Point> search(SearchContext ctx)
+        public ISearchResult<Point> search()
         {
-            init(ctx);
             SearchState stat = SearchState.NONE;
             for (int i = 0; i < MAXIMUM_ITERS; i++)
             {

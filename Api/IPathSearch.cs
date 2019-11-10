@@ -14,4 +14,8 @@ namespace Algo
         int getIterNum();
         IterStatus runIter();
     }
+    public interface IPathSearch2 : IPathSearch
+    {
+        IterStatus runTillEnd();
+    }
 }

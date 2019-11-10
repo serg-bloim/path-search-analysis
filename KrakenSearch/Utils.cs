@@ -95,7 +95,7 @@ namespace System.MapLogic.KrakenSearch
         }
         public static bool ContainsFlag(this SearchState flags, SearchState flag)
         {
-            return (flags & flag) != 0;
+            return (flags & flag) == flag;
         }
     }
 }

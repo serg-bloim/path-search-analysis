@@ -178,7 +178,7 @@ namespace AlgoUI
         {
             if (alg != null)
             {
-                statusLbl.Text = $"{alg.getIterNum()} : {alg.status.ToString()}\nTotal time: {totalTime}";
+                statusLbl.Text = $"{alg.getIterNum()} : {alg.status.ToString()}\nTotal time: {totalTime} ({totalTime/TimeSpan.TicksPerMillisecond}ms)";
             }
         }
 
@@ -328,7 +328,8 @@ namespace AlgoUI
                 }
             }
             //totalTime = sw.Elapsed;
-            totalTime = (DateTime.Now.Ticks - start)/TimeSpan.TicksPerMillisecond;
+            long end = DateTime.Now.Ticks;
+            totalTime = sw.ElapsedTicks;
         }
 
         private void Form1_Load(object sender, EventArgs e)
