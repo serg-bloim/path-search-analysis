@@ -39,6 +39,11 @@ namespace UnityAstar
             return new List<Point>();
         }
 
+        public ICollection<Point> getPath()
+        {
+            return new List<Point>();
+        }
+
         public int getIterNum()
         {
             return algo.exploredSet.Count;

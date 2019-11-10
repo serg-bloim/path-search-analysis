@@ -19,8 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityAstarNew", "UnityAstar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchPathApi", "SearchPathApi\SearchPathApi.csproj", "{A2DAD699-A294-4442-8C5B-ED470B74D1B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AStarSearch", "AStarSearch\AStarSearch.csproj", "{B2860335-2A96-42B1-8CA8-BFFFEE39F914}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KrakenSearch", "KrakenSearch\KrakenSearch.csproj", "{176F91AF-95CF-4F1F-81A8-13C00BBB9C24}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityIntegration", "UnityIntegration\UnityIntegration.csproj", "{64780CE5-16E5-4902-9D55-0AC025B90824}"
@@ -65,10 +63,6 @@ Global
 		{A2DAD699-A294-4442-8C5B-ED470B74D1B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2DAD699-A294-4442-8C5B-ED470B74D1B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2DAD699-A294-4442-8C5B-ED470B74D1B5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B2860335-2A96-42B1-8CA8-BFFFEE39F914}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B2860335-2A96-42B1-8CA8-BFFFEE39F914}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B2860335-2A96-42B1-8CA8-BFFFEE39F914}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B2860335-2A96-42B1-8CA8-BFFFEE39F914}.Release|Any CPU.Build.0 = Release|Any CPU
 		{176F91AF-95CF-4F1F-81A8-13C00BBB9C24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{176F91AF-95CF-4F1F-81A8-13C00BBB9C24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{176F91AF-95CF-4F1F-81A8-13C00BBB9C24}.Release|Any CPU.ActiveCfg = Release|Any CPU
