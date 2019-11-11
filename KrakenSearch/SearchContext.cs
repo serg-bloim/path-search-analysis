@@ -17,12 +17,34 @@ namespace System.MapLogic.KrakenSearch
 
         internal bool isWalkable(Point from, Point to)
         {
+            if (limits > 0)
+            {
+                if (to.x < start.x - limits || to.x > start.x + limits ||
+                    to.y < start.y - limits || to.y > start.y + limits)
+                    return false;
+            }
+
             return mapUnit.Interaction.CheckWalkableForUnit(to.x, to.y, staticOnly);
         }
 
-        internal bool isFinalState(Point state)
+        internal bool isFinalState(Point p)
         {
-            return destination.contains(state);
+            if (p.x >= destination.lower.x && p.x <= destination.upper.x)
+            {
+                return p.y >= destination.lower.y - distance && p.y <= destination.upper.y + distance;
+            }
+            if (p.y >= destination.lower.y && p.y <= destination.upper.y)
+            {
+                return p.x >= destination.lower.x - distance && p.x <= destination.upper.x + distance;
+            }
+            var cx = p.x < destination.lower.x ? destination.lower.x : destination.upper.x;
+            var cy = p.y < destination.lower.y ? destination.lower.y : destination.upper.y;
+            return pow2(p.x - cx) + pow2(p.y - cy) <= distance * distance;
+        }
+
+        private static int pow2(int a)
+        {
+            return a*a;
         }
 
         internal int travelCost(Point @from, Point to)

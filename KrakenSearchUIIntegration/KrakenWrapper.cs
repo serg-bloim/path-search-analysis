@@ -17,6 +17,9 @@ namespace KrakenSearchUIIntegration
         private List<Point> path = new List<Point>();
         public string name => "Kraken";
         public IterStatus status { get; set; } = IterStatus.NONE;
+        public int distance { get; set; }
+        public int limits { get; set; }
+        
         public void init(SearchContext ctx)
         {
             this.ctx = ctx;
@@ -26,7 +29,7 @@ namespace KrakenSearchUIIntegration
             Interaction.width = ctx.width;
             Interaction.height = ctx.height;
             algo.init(new System.MapLogic.KrakenSearch.SearchContext(new MapUnit(), toKraken(ctx.startCell),
-                Region.fromSinglePoint(toKraken(ctx.dstCell)), 0, true));
+                Region.fromSinglePoint(toKraken(ctx.dstCell)), distance, true, limits));
         }
 
         public ICollection<Point> getVisitedPoints()
@@ -76,6 +79,7 @@ namespace KrakenSearchUIIntegration
             status = toIterStatus(state);
             return status;
         }
+
 
         public IterStatus runTillEnd()
         {

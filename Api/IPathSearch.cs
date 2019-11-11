@@ -16,6 +16,8 @@ namespace Algo
     }
     public interface IPathSearch2 : IPathSearch
     {
+        int distance { get; set; }
+        int limits { get; set; }
         IterStatus runTillEnd();
     }
 }

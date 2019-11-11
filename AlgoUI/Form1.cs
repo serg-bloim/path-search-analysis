@@ -315,6 +315,8 @@ namespace AlgoUI
             Stopwatch sw = Stopwatch.StartNew();
             if (alg is IPathSearch2)
             {
+                ((IPathSearch2) alg).distance = (int) distance.Value;
+                ((IPathSearch2) alg).limits = (int) limit.Value;
                 alg.init(ctx);
                 ((IPathSearch2) alg).runTillEnd();
             }
