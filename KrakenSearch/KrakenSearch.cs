@@ -11,11 +11,11 @@ namespace System.MapLogic.KrakenSearch
         public Map<CellFlags> pathFlagsMap;
         public Map<Point> backtrack;
         public PriorityQueue<Point, int> frontier = new PriorityQueue<Point, int>();
-        private IterStatus status;
         private static int MAXIMUM_ITERS = 10000;
         private NeighborStrategy neighborStrategy = NeighborStrategy.FOUR;
         public int iters;
         private int dstCost = Int32.MaxValue;
+        private int closestH = Int32.MaxValue;
 
         public void init(SearchContext ctx)
         {
@@ -31,11 +31,14 @@ namespace System.MapLogic.KrakenSearch
                     distMap[x, y] = int.MaxValue;
                 }
             }
+
+            foundDest = ctx.start;
             distMap[ctx.start] = 0;
             dstCost = Int32.MaxValue;
+            closestH = Int32.MaxValue;
             pathFlagsMap[ctx.start] = CellFlags.VISITED | CellFlags.FRONTIER | CellFlags.START;
-            status = IterStatus.NONE;
             frontier.Enqueue(ctx.start, heuristic(ctx.start));
+            iters=0;
         }
 
         private int heuristic(Point p)
@@ -62,21 +65,19 @@ namespace System.MapLogic.KrakenSearch
         public List<Point> buildPath()
         {
             var path = new List<Point>();
-//            if (status == IterStatus.FOUND)
-//            {
-                Point p = foundDest;
-                while (p != ctx.start)
-                {
-                    path.Add(p);
-                    p = backtrack[p];
-                }
-//            }
+            Point p = foundDest;
+            while (p != ctx.start)
+            {
+                path.Add(p);
+                p = backtrack[p];
+            }
 
             return path;
         }
 
         public SearchState runIter(SearchState status)
         {
+            iters++;
             Point p = frontier.Dequeue();
             pathFlagsMap[p] &= ~CellFlags.FRONTIER;
             status |= processCandidate(p, p.left());
@@ -90,17 +91,20 @@ namespace System.MapLogic.KrakenSearch
                 status |= processCandidate(p, p.right().up());
                 status |= processCandidate(p, p.right().down());
             }
+
             if (frontier.Count() == 0)
             {
                 status |= SearchState.FINISHED;
             }
-            else if (frontier.PeekPriority() > dstCost){
+            else if (frontier.PeekPriority() > dstCost)
+            {
                 // It's impossible to improve the dist point.
                 status |= SearchState.FINISHED | SearchState.FOUND | SearchState.OPTIMAL;
             }
+
             return status;
         }
-        
+
         private SearchState processCandidate(Point from, Point to)
         {
             if (ctx.isWalkable(from, to))
@@ -112,14 +116,19 @@ namespace System.MapLogic.KrakenSearch
                 {
                     curr_dist = int.MaxValue;
                 }
+
                 int new_dist = distMap[from] + ctx.travelCost(from, to);
-                if (new_dist < curr_dist)    //update then
+                if (new_dist < curr_dist) //update then
                 {
                     pathFlagsMap[to] = flags | CellFlags.VISITED | CellFlags.FRONTIER | Utils.getDirection(from, to);
+
                     backtrack[to] = from;
                     distMap[to] = new_dist;
-                    int f = heuristic(to);
+                    var h = ctx.estimateCost(to);
+                    int f = new_dist + h;
                     frontier.Enqueue(to, f);
+
+
                     if (ctx.isFinalState(to))
                     {
                         if (new_dist < dstCost)
@@ -127,10 +136,17 @@ namespace System.MapLogic.KrakenSearch
                             foundDest = to;
                             dstCost = new_dist;
                         }
+
                         return SearchState.FOUND;
+                    }
+                    if (h < closestH)
+                    {
+                        foundDest = to;
+                        closestH = h;
                     }
                 }
             }
+
             return SearchState.NONE;
         }
     }

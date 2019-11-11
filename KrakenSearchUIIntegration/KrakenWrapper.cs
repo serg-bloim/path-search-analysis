@@ -74,14 +74,6 @@ namespace KrakenSearchUIIntegration
             iters++;
             state |= algo.runIter(state);
             status = toIterStatus(state);
-            if (state.ContainsFlag(SearchState.FOUND | SearchState.FINISHED))
-            {
-                path = new List<Point>();
-                foreach (var p in algo.buildPath())
-                {
-                    path.Add(Point.of(p.x, p.y));
-                }
-            }
             return status;
         }
 
@@ -90,16 +82,15 @@ namespace KrakenSearchUIIntegration
             var searchResult = algo.search();
             state =searchResult.getSearchState();
             status = toIterStatus(state);
-            if (state.ContainsFlag(SearchState.FOUND | SearchState.FINISHED))
+            path = new List<Point>();
+            if (state.ContainsFlag(SearchState.FINISHED))
             {
-                path = new List<Point>();
-                foreach (var p in algo.buildPath())
+                foreach (var p in searchResult.getPath())
                 {
                     path.Add(Point.of(p.x, p.y));
                 }
             }
             return status;
-
         }
 
         private IterStatus toIterStatus(SearchState s)

@@ -313,20 +313,30 @@ namespace AlgoUI
         {
             var start = DateTime.Now.Ticks;
             Stopwatch sw = Stopwatch.StartNew();
-            for (int c = 0; c < fullCycles.Value; c++)
+            if (alg is IPathSearch2)
             {
-            IterStatus stat = IterStatus.NONE;
                 alg.init(ctx);
-                int i = 0;
-                while (!stat.HasFlag(IterStatus.FINISHED))
+                ((IPathSearch2) alg).runTillEnd();
+            }
+
+            {
+                for (int c = 0; c < fullCycles.Value; c++)
                 {
-                    if (i++ >= 9999)
+                    IterStatus stat = IterStatus.NONE;
+                    alg.init(ctx);
+                    int i = 0;
+                    while (!stat.HasFlag(IterStatus.FINISHED))
                     {
-                        break;
+                        if (i++ >= 9999)
+                        {
+                            break;
+                        }
+
+                        stat = alg.runIter();
                     }
-                    stat = alg.runIter();
                 }
             }
+
             //totalTime = sw.Elapsed;
             long end = DateTime.Now.Ticks;
             totalTime = sw.ElapsedTicks;
