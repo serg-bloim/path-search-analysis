@@ -29,7 +29,7 @@ namespace KrakenSearchUIIntegration
             Interaction.width = ctx.width;
             Interaction.height = ctx.height;
             algo.init(new System.MapLogic.KrakenSearch.SearchContext(new MapUnit(), toKraken(ctx.startCell),
-                Region.fromSinglePoint(toKraken(ctx.dstCell)), distance, true, limits));
+                Region.fromSinglePoint(toKraken(ctx.dstCell)), distance, true, limits, NeighborStrategy.EIGHT));
         }
 
         public ICollection<Point> getVisitedPoints()

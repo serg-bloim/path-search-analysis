@@ -11,6 +11,11 @@ namespace System.MapLogic.KrakenSearch
         {
             return priority.CompareTo(other.priority);
         }
+
+        public override string ToString()
+        {
+            return $"[{value}:{priority}]";
+        }
     }
 
     public class PriorityQueue<T, P> where P : IComparable<P>

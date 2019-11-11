@@ -13,7 +13,7 @@ namespace System.MapLogic.KrakenSearch
         internal int height;
         internal Point start;
         private Region destination;
-        private NeighborStrategy neighborStrategy = NeighborStrategy.FOUR;
+        internal NeighborStrategy neighborStrategy = NeighborStrategy.FOUR;
 
         internal bool isWalkable(Point from, Point to)
         {
@@ -68,7 +68,7 @@ namespace System.MapLogic.KrakenSearch
                 {
                     var diag = Math.Min(dx, dy);
                     var straight = (dx + dy) - 2 * diag;
-                    return diag + straight;
+                    return diag*15 + straight*10;
                 }
             }
             throw new InvalidEnumArgumentException($"Unsupported NeighborStrategy value: {neighborStrategy}");

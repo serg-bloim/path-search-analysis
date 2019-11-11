@@ -39,7 +39,8 @@ namespace AlgoUI
             InitializeComponent();
             algoDDBox.SelectedItem = algoDDBox.Items[0];
             initAlgos();
-            loadMap("simple.png");
+            loadMap("diagonal.png");
+            algoDDBox.SelectedIndex = algoDDBox.FindStringExact("Kraken");
             startBtn_Click(null, null);
             delayLbl.Text = "Iteration delay: " + delaySlider.Value + "ms";
             renderFreqLbl.Text = "Render every iterations: " + redrawFreq.Value;

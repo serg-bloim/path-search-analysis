@@ -20,6 +20,7 @@ namespace System.MapLogic.KrakenSearch
         public void init(SearchContext ctx)
         {
             this.ctx = ctx;
+            neighborStrategy = ctx.neighborStrategy;
             pathFlagsMap = new Map<CellFlags>(ctx.width, ctx.height);
             distMap = new Map<int>(ctx.width, ctx.height);
             backtrack = new Map<Point>(ctx.width, ctx.height);
@@ -91,7 +92,6 @@ namespace System.MapLogic.KrakenSearch
                 status |= processCandidate(p, p.right().up());
                 status |= processCandidate(p, p.right().down());
             }
-
             if (frontier.Count() == 0)
             {
                 status |= SearchState.FINISHED;
